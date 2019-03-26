@@ -1,0 +1,14 @@
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\RFIDReader_2._0.exe
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\RFIDReader_2._0.pdb
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\CoreCompat.LibUsbDotNet.dll
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Buffers.dll
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Memory.dll
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Buffers.xml
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Memory.xml
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\obj\Debug\RFIDReader 2.0.csprojResolveAssemblyReference.cache
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\obj\Debug\RFIDReader_2._0.exe
+C:\Users\przem\RiderProjects\RFIDReader 2.0\RFIDReader 2.0\obj\Debug\RFIDReader_2._0.pdb
