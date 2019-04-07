@@ -76,7 +76,7 @@
 }
 
 .menu-header {
-  background: linear-gradient(to right, #00FF9B, #5f84fb);
+  background: #201bc8;
   display: grid;
   grid-template-rows: 1fr 4fr;
   grid-template-columns: 1fr 4fr;
@@ -165,46 +165,52 @@
   margin: 0 0.5rem;
 }
 
-.mode-toggle__input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.mode-toggle__container {
+  display: flex;
+  justify-content: space-between;
+  .mode-toggle__input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .mode-toggle__bg {
+    height: 1rem;
+    width: 2rem;
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    transition: background-color 300ms linear;
+  }
+
+  .mode-toggle__circle {
+    height: 1.30rem;
+    width: 1.30rem;
+    background-color: #2B244D;
+    position: absolute;
+    top: -0.2rem;
+    border-radius: 50%;
+    box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+    transition: left 300ms linear;
+    left: 0.1rem;
+  }
+
+  .mode-toggle__circle-checked {
+    background-color: white;
+    left: 1.75rem;
+  }
+
+  .mode-toggle__bg-checked {
+    background-color: #FF0070;
+  }
+
+  .mode-toggle__text {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
 }
 
-.mode-toggle__bg {
-  height: 1rem;
-  width: 2rem;
-  border-radius: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: inline-block;
-  transition: background-color 300ms linear;
-}
 
-.mode-toggle__circle {
-  height: 1.30rem;
-  width: 1.30rem;
-  background-color: #2B244D;
-  position: absolute;
-  top: -0.2rem;
-  border-radius: 50%;
-  box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
-  transition: left 300ms linear;
-  left: 0.1rem;
-}
-
-.mode-toggle__circle-checked {
-  background-color: white;
-  left: 1.75rem;
-}
-
-.mode-toggle__bg-checked {
-  background-color: #FF0070;
-}
-
-.mode-toggle__text {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-}
 
 /*Content*/
 .left__section {
@@ -240,12 +246,10 @@
   fill: #2B244D;
 }
 
-.logo__text-dark {
-  fill: #ffff;
-}
-
-.hamburger__icon__fill {
-  fill: #2B244D;
+.logo__dark {
+  tspan{
+    fill: #ffff;
+  }
 }
 
 .hamburger__icon__fill-dark {
