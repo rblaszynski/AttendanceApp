@@ -8,8 +8,12 @@
         <span class="email__text">robert@mail.com</span>
       </div>
     </section>
-    <section class="menu-body">
-
+    <section>
+      <div class="example-button">
+        <button mat-button color="primary">Lista przedmiotów</button>
+        <button mat-button color="primary">Lista studentów</button>
+        <button mat-button color="primary">Raporty</button>
+      </div>
     </section>
     <section class="menu-footer">
 
@@ -90,43 +94,8 @@
 
   <!--<router-outlet></router-outlet>-->
   <main class="main__container">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non quam eget tellus posuere ultricies non eget
-    arcu. Curabitur et diam tristique, ornare purus vitae, aliquam arcu. Cras fringilla velit in dolor pretium, luctus
-    malesuada libero ullamcorper. Maecenas porta elit quis elementum gravida. Vivamus quis posuere lectus. Sed porttitor
-    faucibus lacus quis placerat. Sed sed magna sapien. Donec aliquet malesuada mauris, id semper tellus pretium vel.
-    Aliquam luctus porttitor nibh, eget varius libero ultrices et. Donec malesuada id orci in congue. Proin convallis
-    tortor ac fermentum auctor. Donec pharetra sapien porttitor elit varius tempus.
-
-    Proin ac mi augue. Nunc urna purus, finibus non dolor sit amet, ullamcorper luctus odio. Integer ac dolor sit amet
-    nunc scelerisque venenatis eget non nunc. Sed lorem elit, vulputate ac fringilla eu, vulputate sed erat. Etiam at
-    nisi lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur a ex
-    sit amet ex venenatis imperdiet a vitae purus. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-    Phasellus neque odio, pellentesque a tortor et, tincidunt ultricies dui. Nullam quis lorem varius, pharetra mauris
-    finibus, aliquet libero.
-
-    Nunc iaculis lacus eu congue mattis. Cras id consectetur diam. Quisque eu eros turpis. Nunc viverra imperdiet
-    dictum. Integer tempor ex vitae odio finibus rhoncus. Etiam vehicula mi id lacus tempor varius. Proin finibus
-    egestas augue nec consectetur. Integer tellus dui, convallis sit amet odio a, pellentesque dapibus lacus. Cras
-    sagittis neque et turpis maximus sagittis. Aenean ultrices pellentesque euismod. Nulla hendrerit ligula eget
-    condimentum sodales.
-
-    Nunc quis leo hendrerit, eleifend ligula vitae, sagittis nibh. Duis ac maximus magna, et sodales turpis. In hac
-    habitasse platea dictumst. Nunc rutrum sit amet orci et tempor. Nulla a aliquam nisl, eu rhoncus sem. Quisque vel
-    semper orci, at rutrum velit. Pellentesque lacus nisl, dignissim at finibus at, vehicula vel dui. Nunc posuere
-    sagittis tortor id convallis. Aenean vel nunc ac augue condimentum cursus. Nulla vehicula elit in elit sagittis, in
-    ullamcorper nulla ultricies. Aenean pellentesque ullamcorper lectus, id imperdiet quam interdum nec. Sed vitae
-    facilisis erat. Integer placerat aliquet ipsum, fermentum luctus erat lacinia non. Morbi aliquam imperdiet nisl et
-    tristique.
-
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum
-    primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi feugiat purus et scelerisque iaculis.
-    Praesent ut tincidunt quam, sit amet ullamcorper ante. Pellentesque non scelerisque dolor. Pellentesque aliquam,
-    neque id cursus scelerisque, tellus augue pharetra massa, ut fermentum metus risus eget tortor. Praesent porta
-    pellentesque maximus. Sed egestas velit a sem tristique, ut porta tellus tempor. Vivamus ac velit eget neque mollis
-    faucibus quis ac massa. In eget rutrum nulla. In accumsan tortor tristique libero lobortis bibendum. Aenean at felis
-    nec libero consequat ullamcorper at cursus neque. Etiam molestie commodo felis, sed blandit nisi. Aliquam quis augue
-    id velit malesuada consectetur.
-
+    <!--<table-basic-example>loading</table-basic-example>-->
+    <app-attendance-table [ngClass]="{'main-container__dark': darkModeActive}"></app-attendance-table>
     <div class="main-container__bg" [ngClass]="{'main-container__bg-dark': darkModeActive}"></div>
     <router-outlet></router-outlet>
   </main>

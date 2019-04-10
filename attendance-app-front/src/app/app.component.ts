@@ -27,4 +27,7 @@ export class AppComponent implements OnInit{
   modeToggleSwitch() {
     this.ui.darkModeState.next(!this.darkModeActive);
   }
+
+
 }
+

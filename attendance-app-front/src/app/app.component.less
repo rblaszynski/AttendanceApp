@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 .root__container {
   width: 100%;
   height: 100%;
@@ -41,7 +43,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #0c1066;
+  background-color: #543789;
   opacity: 0;
   transition: opacity 300ms linear;
   will-change: opacity;
@@ -75,8 +77,23 @@
   transform: none;
 }
 
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+
+.example-button {
+  button{
+    min-height: 50px;
+    width: 100%;
+  };
+}
+
 .menu-header {
-  background: #201bc8;
+  background: #2B244D;
+}
+
+.menu-header {
   display: grid;
   grid-template-rows: 1fr 4fr;
   grid-template-columns: 1fr 4fr;
@@ -261,6 +278,16 @@
     Body
 ================
 */
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.main-container__dark {
+  color: white;
+}
 
 .main-container__bg {
   height: 100%;
