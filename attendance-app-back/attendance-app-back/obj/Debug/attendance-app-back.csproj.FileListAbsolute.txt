@@ -1,0 +1,7 @@
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\bin\Debug\attendance-app-back.exe.config
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\bin\Debug\attendance-app-back.exe
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\bin\Debug\attendance-app-back.pdb
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\obj\Debug\attendance-app-back.csprojAssemblyReference.cache
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\obj\Debug\attendance-app-back.csproj.CoreCompileInputs.cache
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\obj\Debug\attendance-app-back.exe
+C:\Users\micha\source\repos\attendance-app-back\attendance-app-back\obj\Debug\attendance-app-back.pdb
