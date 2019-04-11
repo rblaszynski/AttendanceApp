@@ -33,17 +33,13 @@ for reader in readers():
         READ = [0x90, 0xCA, 0x00, 0x00, 0x00]
         apdu = READ
         print(reader, ': ', toHexString(connection.getATR()))
-        #print('Historical bytes: ', toHexString(atr3.getHistoricalBytes()))
+        print('Historical bytes: ', toHexString(atr3.getHistoricalBytes()))
         print('Sending ', toHexString(apdu), '...')
         response, status1, status2 = cardservice.connection.transmit(apdu)
         print('Response: ', response, ' |  status: ', "%x %x" % (status1, status2))
         uid = toHexString(response).replace(' ', '')
         print('UID: ', uid)
-        #print('checksum: ', "0x%X" % atr3.getChecksum())
-        #print('checksum OK: ', atr3.checksumOK)
-        #print('T0  supported: ', atr3.isT0Supported())
-        #print('T1  supported: ', atr3.isT1Supported())
-        #print('T15 supported: ', atr3.isT15Supported())
+
         if 'win32' == sys.platform:
             print('press Enter to continue')
             sys.stdin.read(1)
