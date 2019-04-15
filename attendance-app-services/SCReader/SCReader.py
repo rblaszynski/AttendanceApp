@@ -30,7 +30,7 @@ for reader in readers():
         cardrequest = CardRequest(timeout=10, cardType=cardtype)
         cardservice = cardrequest.waitforcard()
         cardservice.connection.connect()
-        READ = [0x90, 0xCA, 0x00, 0x00, 0x00]
+        READ = [0x00, 0xCA, 0x00, 0x00, 0x00]
         apdu = READ
         print(reader, ': ', toHexString(connection.getATR()))
         print('Historical bytes: ', toHexString(atr3.getHistoricalBytes()))
