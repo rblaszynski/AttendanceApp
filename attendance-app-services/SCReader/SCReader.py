@@ -17,7 +17,7 @@ def toHex(s):
 
     return lst
 
-
+f=open("data.txt", "a+")
 for reader in readers():
     try:
         connection = reader.createConnection()
@@ -34,6 +34,8 @@ for reader in readers():
         apdu = READ
         print(reader, ': ', toHexString(connection.getATR()))
         print('Historical bytes: ', toHexString(atr3.getHistoricalBytes()))
+        f.write(toHexString(connection.getATR()))
+        f.write("\n")
         print('Sending ', toHexString(apdu), '...')
         response, status1, status2 = cardservice.connection.transmit(apdu)
         print('Response: ', response, ' |  status: ', "%x %x" % (status1, status2))
