@@ -30,12 +30,13 @@ for reader in readers():
         cardrequest = CardRequest(timeout=10, cardType=cardtype)
         cardservice = cardrequest.waitforcard()
         cardservice.connection.connect()
-        READ = [0x00, 0xCA, 0x00, 0x00, 0x00]
+        READ = [0x00, 0xCA, 0x00, 0x00]
         apdu = READ
         print(reader, ': ', toHexString(connection.getATR()))
         print('Historical bytes: ', toHexString(atr3.getHistoricalBytes()))
         f.write(toHexString(connection.getATR()))
         f.write("\n")
+        print("Send ACR to file")
         print('Sending ', toHexString(apdu), '...')
         response, status1, status2 = cardservice.connection.transmit(apdu)
         print('Response: ', response, ' |  status: ', "%x %x" % (status1, status2))
