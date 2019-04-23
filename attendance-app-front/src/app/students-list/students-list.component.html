@@ -1,3 +1,38 @@
 <div class="students_list_view">
-  students-list works!
+  <div class="example-container mat-elevation-z8">
+    <mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell style="min-width:100px" *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell style="min-width:100px" *matHeaderCellDef>First Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell style="min-width:150px" *matHeaderCellDef>Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <mat-cell *matCellDef="let detail">
+          {{detail.element.groups}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; let row; columns: displayedColumns;"
+               matRipple
+               class="element-row"
+               (click)="toggleRow(element)"></mat-row>
+
+      <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+               [@detailExpand]="row.element.show ? 'expanded' : 'collapsed'"
+               style="overflow: hidden">
+      </mat-row>
+    </mat-table>
+  </div>
 </div>

@@ -1,19 +1,21 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
+import {UiService} from "../services/ui/ui.service";
+
 
 export interface PeriodicElement {
+  index: number;
   firstName: string;
   lastName: string;
-  indexNr: number;
   group: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {indexNr: 111111, firstName: 'Michał', lastName: 'Andrzejewski', group: 'TI-1'},
-  {indexNr: 222222, firstName: 'Przemysław', lastName: 'Barłóg', group: 'TI-1'},
-  {indexNr: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', group: 'TI-1'},
-  {indexNr: 444444, firstName: 'Robert', lastName: 'Błaszyński', group: 'TI-1'},
+  {index: 111111, firstName: 'Michał', lastName: 'Andrzejewski', group: 'TI-1'},
+  {index: 222222, firstName: 'Przemysław', lastName: 'Barłóg', group: 'TI-1'},
+  {index: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', group: 'TI-1'},
+  {index: 444444, firstName: 'Robert', lastName: 'Błaszyński', group: 'TI-1'},
 
 ];
 
@@ -23,10 +25,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './attendance-table.component.html',
   styleUrls: ['./attendance-table.component.less']
 })
-export class AttendanceTableComponent {
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+export class AttendanceTableComponent implements OnInit{
+  displayedColumns: string[] = ['select', 'index', 'firstName', 'lastName', 'group'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  darkModeActive: boolean;
+
+  constructor(public ui: UiService) {
+
+  }
+
+  ngOnInit() {
+    this.ui.darkModeState.subscribe((value => {
+      this.darkModeActive = value;
+    }))
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -47,6 +60,6 @@ export class AttendanceTableComponent {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.indexNr + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.index + 1}`;
   }
 }

@@ -1,6 +1,6 @@
 <!-- Slide Menu-->
 <aside class="side-menu__container" [ngClass]="{'side-menu__container-active': showMenu}" (click)="toggleMenu()">
-  <nav class="slide-menu" [ngClass]="{'slide-menu-active': showMenu}" (click)="$event.stopImmediatePropagation();">
+  <nav class="slide-menu" [ngClass]="{'slide-menu-active': showMenu, 'main__header-dark': darkModeActive}" (click)="$event.stopImmediatePropagation();">
     <section class="menu-header">
       <span class="greeting__text">Welcome</span>
       <div class="account-details">
@@ -10,11 +10,11 @@
     </section>
     <section>
       <div class="example-button" (click)="toggleMenu()">
-        <button mat-button routerLink="/" color="primary">Home</button>
-        <button mat-button routerLink="/recent" color="primary">Recent labs</button>
-        <button mat-button routerLink="/classes" color="primary">Classes</button>
-        <button mat-button routerLink="/students" color="primary">Students</button>
-        <button mat-button routerLink="/reports" color="primary">Reports</button>
+        <button mat-button routerLink="/">Home</button>
+        <button mat-button routerLink="/recent">Recent labs</button>
+        <button mat-button routerLink="/classes">Classes</button>
+        <button mat-button routerLink="/students">Students</button>
+        <button mat-button routerLink="/reports">Reports</button>
       </div>
     </section>
     <section class="menu-footer">
