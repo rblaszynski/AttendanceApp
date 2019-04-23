@@ -7,6 +7,9 @@ import {UiService} from "./services/ui/ui.service";
 import {AttendanceTableComponent} from './attendance-table/attendance-table.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -18,7 +21,7 @@ import {
 import {HomeComponent} from './home/home.component';
 import {ReportComponent} from './report/report.component';
 import {StudentsListComponent} from './students-list/students-list.component';
-import {ClassesListComponent} from './classes-list/classes-list.component';
+import {ClassesViewComponent} from './classes-view/classes-view.component';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import {ClassesListComponent} from './classes-list/classes-list.component';
     HomeComponent,
     ReportComponent,
     StudentsListComponent,
-    ClassesListComponent,
+    ClassesViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,10 @@ import {ClassesListComponent} from './classes-list/classes-list.component';
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
   ],
   providers: [
     UiService

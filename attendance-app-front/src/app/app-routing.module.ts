@@ -4,12 +4,12 @@ import {AttendanceTableComponent} from "./attendance-table/attendance-table.comp
 import {StudentsListComponent} from "./students-list/students-list.component";
 import {ReportComponent} from "./report/report.component";
 import {HomeComponent} from "./home/home.component";
-import {ClassesListComponent} from "./classes-list/classes-list.component";
+import {ClassesViewComponent} from "./classes-view/classes-view.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'recent', component: AttendanceTableComponent},
-  {path: 'classes', component: ClassesListComponent},
+  {path: 'classes', component: ClassesViewComponent},
   {path: 'students', component: StudentsListComponent},
   {path: 'reports', component: ReportComponent}
 ];
