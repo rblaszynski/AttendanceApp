@@ -1,3 +1,33 @@
 <div class="report_view">
-  Report view works!
+  <div class="radio-buttons">
+    <mat-radio-group class="example-radio-group" aria-labelledby="example-radio-group-label" aria-label="Select an option" [(ngModel)]="selected" #ctrl="ngModel">
+      <mat-radio-button value="student">Student</mat-radio-button>
+      <mat-radio-button value="class">Class</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="student-container" *ngIf="selected==='student'">
+    <mat-label>Student </mat-label>
+    <mat-form-field>
+      <mat-select>
+        <mat-option *ngFor="let student of students" [value]="student.id">
+          {{student.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="student-container" *ngIf="selected==='class'">
+    <mat-label>Class </mat-label>
+    <mat-form-field>
+      <mat-select>
+        <mat-option *ngFor="let class of classes" [value]="class.id">
+          {{class.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button *ngIf="selected!==null" mat-button>Generate report</button>
+
 </div>
