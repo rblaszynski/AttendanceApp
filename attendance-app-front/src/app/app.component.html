@@ -9,10 +9,12 @@
       </div>
     </section>
     <section>
-      <div class="example-button">
-        <button mat-button color="primary">Lista przedmiotów</button>
-        <button mat-button color="primary">Lista studentów</button>
-        <button mat-button color="primary">Raporty</button>
+      <div class="example-button" (click)="toggleMenu()">
+        <button mat-button routerLink="/" color="primary">Home</button>
+        <button mat-button routerLink="/recent" color="primary">Recent labs</button>
+        <button mat-button routerLink="/classes" color="primary">Classes</button>
+        <button mat-button routerLink="/students" color="primary">Students</button>
+        <button mat-button routerLink="/reports" color="primary">Reports</button>
       </div>
     </section>
     <section class="menu-footer">
@@ -92,10 +94,7 @@
 
   <!-- Main Content -->
 
-  <!--<router-outlet></router-outlet>-->
-  <main class="main__container">
-    <!--<table-basic-example>loading</table-basic-example>-->
-    <app-attendance-table [ngClass]="{'main-container__dark': darkModeActive}"></app-attendance-table>
+  <main class="main-container" [ngClass]="{'main-container__dark': darkModeActive}">
     <div class="main-container__bg" [ngClass]="{'main-container__bg-dark': darkModeActive}"></div>
     <router-outlet></router-outlet>
   </main>
