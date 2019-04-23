@@ -79,3 +79,4 @@ hs_err_pid*
 
 #Diagnostic files
 data.txt
+/attendance-app-front/node_modules/
