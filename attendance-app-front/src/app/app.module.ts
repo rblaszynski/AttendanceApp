@@ -22,6 +22,7 @@ import {HomeComponent} from './home/home.component';
 import {ReportComponent} from './report/report.component';
 import {StudentsListComponent} from './students-list/students-list.component';
 import {ClassesViewComponent} from './classes-view/classes-view.component';
+import {CalendarHeaderComponent} from './calendar-header/calendar-header.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {ClassesViewComponent} from './classes-view/classes-view.component';
     ReportComponent,
     StudentsListComponent,
     ClassesViewComponent,
+    CalendarHeaderComponent,
   ],
   imports: [
     BrowserModule,

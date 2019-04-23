@@ -1,3 +1,23 @@
 <div class="classes_view">
-  classes-view works!
+  <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+  </mwl-demo-utils-calendar-header>
+  <div [ngSwitch]="view">
+    <mwl-calendar-week-view
+      *ngSwitchCase="'week'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [dayStartHour]="8"
+      [dayEndHour]="18"
+      (eventClicked)="eventClicked($event)"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'"
+      [viewDate]="viewDate"
+      [events]="events"
+      (eventClicked)="eventClicked($event)"
+    >
+    </mwl-calendar-day-view>
+  </div>
 </div>
+
