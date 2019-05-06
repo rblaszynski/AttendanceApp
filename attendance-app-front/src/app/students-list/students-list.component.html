@@ -3,16 +3,16 @@
     Upload students list:
   </div>
   <div class="upload-buttons">
-      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="fileInput.click()">Choose File</button>
       <input hidden #fileInput (change)="fileChanged($event)" type="file" id="file">
       <span [innerHTML]="fileName"></span>
-      <button type="button" mat-raised-button (click)="uploadFile()">Submit</button>
+      <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="uploadFile()">Submit</button>
     </div>
-  <mat-form-field>
+  <mat-form-field [ngClass]="{'filter-dark': darkModeActive}">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
-  <div class="example-container mat-elevation-z8">
-    <mat-table [dataSource]="dataSource">
+  <div class="example-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="{'mat-table-dark': darkModeActive}">
 
       <ng-container matColumnDef="id">
         <mat-header-cell style="min-width:100px" *matHeaderCellDef>Id</mat-header-cell>
@@ -45,6 +45,6 @@
                [@detailExpand]="row.element.show ? 'expanded' : 'collapsed'"
                style="overflow: hidden">
       </mat-row>
-    </mat-table>
+    </table>
   </div>
 </div>

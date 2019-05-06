@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
+import {UiService} from "../services/ui/ui.service";
 
 @Component({
   selector: 'app-students-list',
@@ -20,15 +21,19 @@ export class StudentsListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   file: any;
   fileName: string;
+  darkModeActive: boolean;
   isExpansionDetailRow = (i: number, row: Object) => {
     return row.hasOwnProperty('detailRow');
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public ui: UiService) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.getRows());
     this.fileName = '';
+    this.ui.darkModeState.subscribe((value => {
+      this.darkModeActive = value;
+    }))
   }
 
   getRows() {
