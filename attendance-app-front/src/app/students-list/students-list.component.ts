@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-students-list',
@@ -8,8 +9,8 @@ import {MatTableDataSource} from "@angular/material";
   styleUrls: ['./students-list.component.less'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
+      state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+      state('expanded', style({height: '*', visibility: 'visible'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -17,19 +18,22 @@ import {MatTableDataSource} from "@angular/material";
 export class StudentsListComponent implements OnInit {
   displayedColumns = ['id', 'firstName', 'lastName'];
   dataSource: MatTableDataSource<any>;
+  file: any;
+  fileName: string;
   isExpansionDetailRow = (i: number, row: Object) => {
     return row.hasOwnProperty('detailRow');
   };
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.getRows());
+    this.fileName = '';
   }
 
   getRows() {
     const rows = [];
-    data.forEach(element => rows.push(element, { detailRow: true,      element }));
+    data.forEach(element => rows.push(element, {detailRow: true, element}));
     console.log(rows);
     return rows;
   }
@@ -41,7 +45,29 @@ export class StudentsListComponent implements OnInit {
     this.dataSource.data[index].element.show = !this.dataSource.data[index].element.show;
   }
 
+
+  fileChanged(event) {
+    this.file = event.target.files[0];
+    this.fileName = this.file.name;
+  }
+
+  uploadFile() {
+    if (this.file) {
+      let fileUploadForm: FormData = new FormData();
+      fileUploadForm.append("myFileName", this.file);
+      this.http
+        .post("http://localhost:4200/api", fileUploadForm)
+        .subscribe(response => {
+          //handle response
+        }, err => {
+          //handle error
+        });
+    }
+  }
+
+
 }
+
 export interface Element {
   id: number;
   firstName: string;
@@ -50,8 +76,8 @@ export interface Element {
 }
 
 const data: Element[] = [
-  { id: 111111, firstName: 'Michał', lastName: 'Andrzejewski', groups: ['PT-1', 'PZ-1'] },
-  { id: 222222, firstName: 'Przemysław', lastName: 'Barłóg', groups: ['PT-1', 'PZ-1'] },
-  { id: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', groups: ['PT-2', 'PZ-2'] },
-  { id: 444444, firstName: 'Robert', lastName: 'Błaszyński', groups: ['PT-2', 'PZ-2'] },
-  ];
+  {id: 111111, firstName: 'Michał', lastName: 'Andrzejewski', groups: ['PT-1', 'PZ-1']},
+  {id: 222222, firstName: 'Przemysław', lastName: 'Barłóg', groups: ['PT-1', 'PZ-1']},
+  {id: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', groups: ['PT-2', 'PZ-2']},
+  {id: 444444, firstName: 'Robert', lastName: 'Błaszyński', groups: ['PT-2', 'PZ-2']},
+];

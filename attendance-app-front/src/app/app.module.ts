@@ -14,6 +14,7 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatFormFieldModule,
+  MatIconModule,
   MatRadioModule,
   MatSelectModule,
   MatTableModule
@@ -23,6 +24,7 @@ import {ReportComponent} from './report/report.component';
 import {StudentsListComponent} from './students-list/students-list.component';
 import {ClassesViewComponent} from './classes-view/classes-view.component';
 import {CalendarHeaderComponent} from './calendar-header/calendar-header.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -46,14 +48,17 @@ import {CalendarHeaderComponent} from './calendar-header/calendar-header.compone
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
+    MatIconModule,
+    HttpClientModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
   ],
   providers: [
-    UiService
+    UiService,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

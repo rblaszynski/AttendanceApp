@@ -25,25 +25,37 @@ export class ClassesViewComponent implements OnInit {
       title: 'TSM',
       color: colors.yellow,
       start: setHours(setMinutes(new Date(), 0), 8),
-      end: setHours(setMinutes(new Date(), 30), 9)
+      end: setHours(setMinutes(new Date(), 30), 9),
+      meta: {
+        location: "A1"
+      }
     },
     {
       title: 'PT',
       color: colors.blue,
       start: setHours(setMinutes(new Date(), 45), 9),
-      end: setHours(setMinutes(new Date(), 15), 11)
+      end: setHours(setMinutes(new Date(), 15), 11),
+      meta: {
+        location: "L-22"
+      }
     },
     {
       title: 'WTI',
       color: colors.red,
       start: setHours(setMinutes(new Date(), 45), 11),
-      end: setHours(setMinutes(new Date(), 15), 13)
+      end: setHours(setMinutes(new Date(), 15), 13),
+      meta: {
+        location: "M-215"
+      }
     },
     {
       title: 'PZ',
       color: colors.green,
       start: setHours(setMinutes(new Date(), 30), 13),
-      end: setHours(setMinutes(new Date(), 0), 15)
+      end: setHours(setMinutes(new Date(), 0), 15),
+      meta: {
+        location: "210"
+      }
     }
   ];
 
