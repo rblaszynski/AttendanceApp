@@ -45,6 +45,9 @@ export class StudentsListComponent implements OnInit {
     this.dataSource.data[index].element.show = !this.dataSource.data[index].element.show;
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   fileChanged(event) {
     this.file = event.target.files[0];

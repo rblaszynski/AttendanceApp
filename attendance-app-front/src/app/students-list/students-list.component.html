@@ -1,11 +1,16 @@
 <div class="students_list_view">
-  <div class="upload-buttons">
-    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-    <input hidden #fileInput (change)="fileChanged($event)" type="file" id="file">
-    <span [innerHTML]="fileName"></span>
-    <button type="button" mat-raised-button (click)="uploadFile()">Submit</button>
+  <div class="upload-file">
+    Upload students list:
   </div>
-
+  <div class="upload-buttons">
+      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <input hidden #fileInput (change)="fileChanged($event)" type="file" id="file">
+      <span [innerHTML]="fileName"></span>
+      <button type="button" mat-raised-button (click)="uploadFile()">Submit</button>
+    </div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
   <div class="example-container mat-elevation-z8">
     <mat-table [dataSource]="dataSource">
 

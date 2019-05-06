@@ -15,6 +15,7 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatRadioModule,
   MatSelectModule,
   MatTableModule
@@ -54,6 +55,7 @@ import {HttpClientModule} from "@angular/common/http";
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    MatInputModule,
   ],
   providers: [
     UiService,
