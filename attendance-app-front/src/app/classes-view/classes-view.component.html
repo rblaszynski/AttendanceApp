@@ -1,7 +1,7 @@
 <div class="classes_view">
   <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
   </mwl-demo-utils-calendar-header>
-  <div [ngSwitch]="view">
+  <div class="calendar-view" [ngSwitch]="view">
     <mwl-calendar-week-view
       *ngSwitchCase="'week'"
       [viewDate]="viewDate"

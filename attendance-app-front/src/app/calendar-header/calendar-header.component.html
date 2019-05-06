@@ -2,16 +2,16 @@
   <div>
     <div>
       <button
-        mat-button
+        mat-raised-button
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)"
       >
-        Previous
+        <
       </button>
       <button
-        mat-button
+        mat-raised-button
         mwlCalendarToday
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)"
@@ -19,13 +19,13 @@
         Today
       </button>
       <button
-        mat-button
+        mat-raised-button
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)"
       >
-        Next
+        >
       </button>
     </div>
   </div>
@@ -35,14 +35,14 @@
   <div>
     <div>
       <button
-        mat-button
+        mat-raised-button
         (click)="viewChange.emit('week')"
         [class.active]="view === 'week'"
       >
         Week
       </button>
       <button
-        mat-button
+        mat-raised-button
         (click)="viewChange.emit('day')"
         [class.active]="view === 'day'"
       >

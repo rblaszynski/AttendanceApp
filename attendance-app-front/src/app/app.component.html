@@ -79,8 +79,8 @@
 
     <div class="mode-toggle__container">
       <span class="mode-toggle__text">Light</span>
-      <div>
-        <label class="toggle-button__container">
+      <div class="toggle-button__container">
+        <label>
           <input (click)="modeToggleSwitch()" type="checkbox" class="mode-toggle__input"/>
           <span [ngClass]="{'mode-toggle__bg-checked': darkModeActive}" class="mode-toggle__bg"></span>
           <span [ngClass]="{'mode-toggle__circle-checked': darkModeActive}" class="mode-toggle__circle"></span>

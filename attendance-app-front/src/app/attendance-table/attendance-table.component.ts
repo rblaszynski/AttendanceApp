@@ -30,6 +30,10 @@ export class AttendanceTableComponent implements OnInit{
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   darkModeActive: boolean;
+  className = 'Sample className';
+  classGroupName = "PT_01";
+  classStartDate = new Date();
+  classEndDate = new Date().setHours(this.classStartDate.getHours()+1, this.classStartDate.getMinutes()+30);
 
   constructor(public ui: UiService) {
 
