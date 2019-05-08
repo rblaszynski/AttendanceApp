@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
 import {setHours, setMinutes} from 'date-fns';
+import {UiService} from "../services/ui/ui.service";
 
 
 @Component({
@@ -9,11 +10,15 @@ import {setHours, setMinutes} from 'date-fns';
   styleUrls: ['./classes-view.component.less']
 })
 export class ClassesViewComponent implements OnInit {
+  darkModeActive: boolean;
 
-  constructor() {
+  constructor(public ui: UiService) {
   }
 
   ngOnInit() {
+    this.ui.darkModeState.subscribe((value => {
+      this.darkModeActive = value;
+    }))
   }
 
   view: string = 'week';

@@ -1,14 +1,16 @@
-<div class="classes_view">
+<div class="classes_view" [ngClass]="{'classes-dark': darkModeActive}">
   <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
   </mwl-demo-utils-calendar-header>
   <div class="calendar-view" [ngSwitch]="view">
     <mwl-calendar-week-view
+      [weekStartsOn]="1"
       *ngSwitchCase="'week'"
       [viewDate]="viewDate"
       [events]="events"
       [dayStartHour]="8"
       [dayEndHour]="18"
       (eventClicked)="eventClicked($event)"
+      [ngClass]="{'dark-mode': darkModeActive}"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -16,6 +18,7 @@
       [viewDate]="viewDate"
       [events]="events"
       (eventClicked)="eventClicked($event)"
+      [ngClass]="{'dark-mode': darkModeActive}"
     >
     </mwl-calendar-day-view>
   </div>
