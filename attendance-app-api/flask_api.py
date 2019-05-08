@@ -72,6 +72,30 @@ def get_latest_lecture():
 @app.route('/api/calendar/all', methods=['GET'])
 def get_from_calendar():
     calendar_data = []
+    lecture = {}
+    lecture['title'] = 'TSM'
+    lecture['color'] = "colors.yellow"
+    lecture['start'] = now
+    calendar_data.append(lecture)
+
+    lecture = {}
+    lecture['title'] = 'PT'
+    lecture['color'] = "colors.blue"
+    lecture['start'] = now
+    calendar_data.append(lecture)
+
+    lecture = {}
+    lecture['title'] = 'WTI'
+    lecture['color'] = 'colors.red'
+    lecture['start'] = now
+    calendar_data.append(lecture)
+
+    lecture = {}
+    lecture['title'] = "PZ"
+    lecture['color'] = 'colors.green'
+    lecture['start'] = now
+    calendar_data.append(lecture)
+
     return jsonify(calendar_data), {"Content-Type": "application/json"}
 
 
