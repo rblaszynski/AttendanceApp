@@ -3,6 +3,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {UiService} from "../services/ui/ui.service";
+import {StudentsService} from "../services/students.service";
+import {Student} from "../model/Student";
 
 @Component({
   selector: 'app-students-list',
@@ -22,25 +24,28 @@ export class StudentsListComponent implements OnInit {
   file: any;
   fileName: string;
   darkModeActive: boolean;
+  students: Student[];
   isExpansionDetailRow = (i: number, row: Object) => {
     return row.hasOwnProperty('detailRow');
   };
 
-  constructor(private http: HttpClient, public ui: UiService) {}
+  constructor(private http: HttpClient, public ui: UiService, private studentsService: StudentsService) {
+  }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.getRows());
     this.fileName = '';
     this.ui.darkModeState.subscribe((value => {
       this.darkModeActive = value;
-    }))
+    }));
+    this.getStudents();
   }
 
-  getRows() {
-    const rows = [];
-    data.forEach(element => rows.push(element, {detailRow: true, element}));
-    console.log(rows);
-    return rows;
+  getStudents(): void {
+    this.studentsService.getStudents()
+      .subscribe((res: any[]) => {
+        this.students = res;
+        this.dataSource = new MatTableDataSource(res)
+      });
   }
 
   toggleRow(value: Element) {
@@ -72,8 +77,6 @@ export class StudentsListComponent implements OnInit {
         });
     }
   }
-
-
 }
 
 export interface Element {
@@ -82,10 +85,3 @@ export interface Element {
   lastName: string;
   groups: string[];
 }
-
-const data: Element[] = [
-  {id: 111111, firstName: 'Michał', lastName: 'Andrzejewski', groups: ['PT-1', 'PZ-1']},
-  {id: 222222, firstName: 'Przemysław', lastName: 'Barłóg', groups: ['PT-1', 'PZ-1']},
-  {id: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', groups: ['PT-2', 'PZ-2']},
-  {id: 444444, firstName: 'Robert', lastName: 'Błaszyński', groups: ['PT-2', 'PZ-2']},
-];

@@ -2,47 +2,51 @@ import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {UiService} from "../services/ui/ui.service";
-
+import {RecentLabsService} from "../services/recent-labs.service";
+import {Lecture} from "../model/Lecture";
 
 export interface PeriodicElement {
-  index: number;
+  id: number;
   firstName: string;
   lastName: string;
   group: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {index: 111111, firstName: 'Michał', lastName: 'Andrzejewski', group: 'TI-1'},
-  {index: 222222, firstName: 'Przemysław', lastName: 'Barłóg', group: 'TI-1'},
-  {index: 333333, firstName: 'Dominik', lastName: 'Błaszczyk', group: 'TI-1'},
-  {index: 444444, firstName: 'Robert', lastName: 'Błaszyński', group: 'TI-1'},
-
-];
-
 
 @Component({
   selector: 'app-attendance-table',
   templateUrl: './attendance-table.component.html',
   styleUrls: ['./attendance-table.component.less']
 })
-export class AttendanceTableComponent implements OnInit{
-  displayedColumns: string[] = ['select', 'index', 'firstName', 'lastName', 'group'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+export class AttendanceTableComponent implements OnInit {
+  displayedColumns: string[] = ['select', 'id', 'firstName', 'lastName', 'group'];
+  dataSource: MatTableDataSource<PeriodicElement>;
   selection = new SelectionModel<PeriodicElement>(true, []);
   darkModeActive: boolean;
-  className = 'Sample className';
-  classGroupName = "PT_01";
-  classStartDate = new Date();
-  classEndDate = new Date().setHours(this.classStartDate.getHours()+1, this.classStartDate.getMinutes()+30);
+  className: string;
+  classGroupName: string;
+  classStartDate: Date;
+  classEndDate: Date;
 
-  constructor(public ui: UiService) {
+  constructor(public ui: UiService, private recentLabsService: RecentLabsService) {
 
   }
 
   ngOnInit() {
     this.ui.darkModeState.subscribe((value => {
       this.darkModeActive = value;
-    }))
+    }));
+    this.getRecentLabs();
+  }
+
+  getRecentLabs(): void {
+    this.recentLabsService.getRecentLabs()
+      .subscribe((res: Lecture) => {
+        this.className = res.className;
+        this.classGroupName = res.classGroupName;
+        this.classStartDate = res.classStartDate;
+        this.classEndDate = res.classEndDate;
+        this.dataSource = new MatTableDataSource<PeriodicElement>(res.studentsList);
+      })
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -64,6 +68,6 @@ export class AttendanceTableComponent implements OnInit{
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.index + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 }

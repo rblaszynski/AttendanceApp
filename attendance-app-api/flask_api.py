@@ -3,8 +3,20 @@ import datetime
 from flask import Flask, jsonify, make_response
 
 app = Flask(__name__, static_url_path="")
-now = datetime.datetime.now()
-endDate = datetime.datetime.now() + datetime.timedelta(minutes=90)
+students = [
+    {'id': 111111, 'firstName': 'Michał', 'lastName': 'Andrzejewski', 'group': 'TI-1'},
+    {'id': 222222, 'firstName': 'Przemysław', 'lastName': 'Barłóg', 'group': 'TI-2'},
+    {'id': 333333, 'firstName': 'Dominik', 'lastName': 'Błaszczyk', 'group': 'TI-3'},
+    {'id': 444444, 'firstName': 'Robert', 'lastName': 'Błaszyński', 'group': 'TI-4'},
+]
+
+calendar_data = [
+    {'title': 'TSM', 'color': {'primary': '#ad2121'}, 'start': datetime.datetime.now(),
+     'end': datetime.datetime.now() + datetime.timedelta(minutes=90), 'meta': {'location': "A1"}},
+    {'title': 'PTM', 'color': {'primary': '#1e90ff'},
+     'start': datetime.datetime.now() + datetime.timedelta(minutes=105),
+     'end': datetime.datetime.now() + datetime.timedelta(minutes=200), 'meta': {'location': "A2"}},
+]
 
 
 @app.after_request
@@ -27,51 +39,20 @@ def default():
 
 @app.route('/api/students/all', methods=['GET'])
 def get_list_of_students():
-    students = []
-    groups = ['PT-1', 'PZ-1']
-    student = {}
-    student['id'] = 111111
-    student['firstName'] = 'Michal'
-    student['lastName'] = 'Andrzejewski'
-    student['groups'] = groups
-    students.append(student)
-
-    student = {}
-    student['id'] = 22222
-    student['firstName'] = 'Przemyslaw'
-    student['lastName'] = 'Barlog'
-    student['groups'] = groups
-    students.append(student)
-
-    student = {}
-    student['id'] = 33333
-    student['firstName'] = 'Dominik'
-    student['lastName'] = 'Blaszczyk'
-    student['groups'] = groups
-    students.append(student)
-
-    student = {}
-    student['id'] = 44444
-    student['firstName'] = 'Robert'
-    student['lastName'] = 'Blaszynski'
-    student['groups'] = groups
-    students.append(student)
-
     return jsonify(students), {"Content-Type": "application/json"}
 
 
 @app.route('/api/lecture/latest', methods=['GET'])
 def get_latest_lecture():
-    students = []
-    return jsonify(className='class name',
-                   classGroupName="group name",
-                   classStartDate=now,
-                   classEndDate=endDate), {"Content-Type": "application/json"}
+    return jsonify(className='CLASS_NAME',
+                   classGroupName="GROUP_NAME",
+                   classStartDate=datetime.datetime.now(),
+                   classEndDate=datetime.datetime.now() + datetime.timedelta(minutes=90),
+                   studentsList=students), {"Content-Type": "application/json"}
 
 
 @app.route('/api/calendar/all', methods=['GET'])
 def get_from_calendar():
-    calendar_data = []
     return jsonify(calendar_data), {"Content-Type": "application/json"}
 
 
