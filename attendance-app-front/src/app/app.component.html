@@ -3,7 +3,7 @@
   <nav class="slide-menu" [ngClass]="{'slide-menu-active': showMenu, 'main__header-dark': darkModeActive}"
        (click)="$event.stopImmediatePropagation();">
     <section class="menu-header">
-      <span class="greeting__text">{{currentTime | date: 'medium'}}</span>
+      <span class="greeting__text">{{currentTime | date: 'short'}}</span>
       <div class="user-info">
         <div class="avatar">
           <img src="../assets/bob_small.jpg" alt="bob"><img>

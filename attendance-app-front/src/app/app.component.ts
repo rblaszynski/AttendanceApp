@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     this.currentTime = new Date();
     this.intervalId = setInterval(() => {
       this.showDigitalClock();
-    }, 1000);
+    }, 60000);
 
   }
 
