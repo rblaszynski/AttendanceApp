@@ -1,11 +1,17 @@
 <!-- Slide Menu-->
 <aside class="side-menu__container" [ngClass]="{'side-menu__container-active': showMenu}" (click)="toggleMenu()">
-  <nav class="slide-menu" [ngClass]="{'slide-menu-active': showMenu, 'main__header-dark': darkModeActive}" (click)="$event.stopImmediatePropagation();">
+  <nav class="slide-menu" [ngClass]="{'slide-menu-active': showMenu, 'main__header-dark': darkModeActive}"
+       (click)="$event.stopImmediatePropagation();">
     <section class="menu-header">
-      <span class="greeting__text">Welcome</span>
-      <div class="account-details">
-        <span class="name__text">Robert</span>
-        <span class="email__text">robert@mail.com</span>
+      <span class="greeting__text">{{currentTime | date: 'medium'}}</span>
+      <div class="user-info">
+        <div class="avatar">
+          <img src="../assets/bob_small.jpg" alt="bob"><img>
+        </div>
+        <div class="account-details">
+          <span class="name__text">Robert</span>
+          <span class="email__text">robert@mail.com</span>
+        </div>
       </div>
     </section>
     <section>

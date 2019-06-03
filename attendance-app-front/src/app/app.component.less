@@ -100,9 +100,6 @@
 
 .menu-header {
   background: #2B244D;
-}
-
-.menu-header {
   display: grid;
   grid-template-rows: 1fr 4fr;
   grid-template-columns: 1fr 4fr;
@@ -112,6 +109,21 @@
   align-content: center;
   color: white;
   box-shadow: 0 0.5rem 2rem rgba(0, 0, 255, 0.2);
+
+  .user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .avatar {
+      img {
+        border-radius: 50%;
+        width: 100px;
+        padding: 20px;
+      }
+    }
+  }
+
 }
 
 .greeting__text {
