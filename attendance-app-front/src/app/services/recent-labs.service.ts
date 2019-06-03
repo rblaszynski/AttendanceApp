@@ -17,8 +17,8 @@ export class RecentLabsService {
     return this.http.get<Lecture>(this.studentsUrl);
   }
 
-  updateRecentLabs(lecture): Observable<[]> {
-    return this.http.put<[]>(this.studentsUrl, lecture);
+  updateRecentLabs(studentsList): Observable<[]> {
+    return this.http.put<[]>(this.studentsUrl, studentsList);
   }
 
 }
