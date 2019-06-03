@@ -4,16 +4,21 @@
 Sprawdzanie obecności w laboratorium z wykorzystaniem legitymacji studenckiej
 
 ## Description 
+Aplikacja do zarządzania obecnościami studentów na zajęciach.
 
-## Tools 
+## Deployment
 
-## How to run 
+run ```flask_api.py```
 
-## How to compile 
+ng serve ```attendance-app-front```
+
+
+## Built With
+
+* [Angular](https://angular.io/) - Web framework
+* [Flask](http://flask.pocoo.org/) - Microframework for RESTful request dispatching
 
 ## Future improvements 
-
-## Attributions
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
