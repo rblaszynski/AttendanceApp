@@ -1,6 +1,7 @@
 import datetime
+import json
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 
 app = Flask(__name__, static_url_path="")
 students = [
@@ -10,12 +11,20 @@ students = [
     {'id': 444444, 'firstName': 'Robert', 'lastName': 'Błaszyński', 'group': 'TI-4'},
 ]
 
+students_attendance = [
+    {'id': 111111, 'firstName': 'Michał', 'lastName': 'Andrzejewski', 'group': 'TI-1', 'isPresent': True},
+    {'id': 222222, 'firstName': 'Przemysław', 'lastName': 'Barłóg', 'group': 'TI-2', 'isPresent': True},
+    {'id': 333333, 'firstName': 'Dominik', 'lastName': 'Błaszczyk', 'group': 'TI-3', 'isPresent': False},
+    {'id': 444444, 'firstName': 'Adam', 'lastName': 'Błaszyński', 'group': 'TI-4', 'isPresent': False},
+]
+
 calendar_data = [
-    {'title': 'TSM', 'color': {'primary': '#ad2121'}, 'start': datetime.datetime.now(),
-     'end': datetime.datetime.now() + datetime.timedelta(minutes=90), 'meta': {'location': "A1"}},
+    {'title': 'TSM', 'color': {'primary': '#ad2121'},
+     'start': datetime.datetime.now() - datetime.timedelta(minutes=360),
+     'end': datetime.datetime.now() - datetime.timedelta(minutes=300), 'meta': {'location': "A1"}},
     {'title': 'PTM', 'color': {'primary': '#1e90ff'},
-     'start': datetime.datetime.now() + datetime.timedelta(minutes=105),
-     'end': datetime.datetime.now() + datetime.timedelta(minutes=200), 'meta': {'location': "A2"}},
+     'start': datetime.datetime.now() - datetime.timedelta(minutes=240),
+     'end': datetime.datetime.now() - datetime.timedelta(minutes=180), 'meta': {'location': "A2"}},
 ]
 
 
@@ -48,7 +57,17 @@ def get_latest_lecture():
                    classGroupName="GROUP_NAME",
                    classStartDate=datetime.datetime.now(),
                    classEndDate=datetime.datetime.now() + datetime.timedelta(minutes=90),
-                   studentsList=students), {"Content-Type": "application/json"}
+                   studentsList=students_attendance), {"Content-Type": "application/json"}
+
+
+@app.route('/api/lecture/latest', methods=['PUT'])
+def update_latest_lecture():
+    request_data = json.loads(request.data)
+    students_attendance.clear()
+    for s in request_data:
+        students_attendance.append(s)
+    print(students_attendance)
+    return jsonify(students_attendance), {"Content-Type": "application/json"}
 
 
 @app.route('/api/calendar/all', methods=['GET'])

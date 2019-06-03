@@ -10,6 +10,7 @@ export interface PeriodicElement {
   firstName: string;
   lastName: string;
   group: string;
+  isPresent: boolean;
 }
 
 @Component({
@@ -18,7 +19,7 @@ export interface PeriodicElement {
   styleUrls: ['./attendance-table.component.less']
 })
 export class AttendanceTableComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'id', 'firstName', 'lastName', 'group'];
+  displayedColumns: string[] = ['select', 'id', 'firstName', 'lastName', 'group', 'isPresent'];
   dataSource: MatTableDataSource<PeriodicElement>;
   selection = new SelectionModel<PeriodicElement>(true, []);
   darkModeActive: boolean;
@@ -46,7 +47,19 @@ export class AttendanceTableComponent implements OnInit {
         this.classStartDate = res.classStartDate;
         this.classEndDate = res.classEndDate;
         this.dataSource = new MatTableDataSource<PeriodicElement>(res.studentsList);
+        this.dataSource.data.forEach(row => {
+          if (row.isPresent) {
+            this.selection.select(row)
+          }
+        });
       })
+  }
+
+  updateRecentLabs(): void {
+    this.recentLabsService.updateRecentLabs(this.dataSource.filteredData).subscribe((res) => {
+      console.log(res);
+      this.dataSource.filteredData = res;
+    });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -68,6 +81,7 @@ export class AttendanceTableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
+    row.isPresent = this.selection.isSelected(row);
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 }
