@@ -17,4 +17,9 @@ export class StudentsService {
     return this.http.get<Student[]>(this.studentsUrl);
   }
 
+  loadFile(file): void {
+    this.http.post(this.studentsUrl, file)
+      .subscribe((res) => console.log(res));
+  }
+
 }

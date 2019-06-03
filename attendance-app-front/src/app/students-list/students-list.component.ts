@@ -68,13 +68,7 @@ export class StudentsListComponent implements OnInit {
     if (this.file) {
       let fileUploadForm: FormData = new FormData();
       fileUploadForm.append("myFileName", this.file);
-      this.http
-        .post("http://localhost:4200/api", fileUploadForm)
-        .subscribe(response => {
-          //handle response
-        }, err => {
-          //handle error
-        });
+      this.studentsService.loadFile(fileUploadForm);
     }
   }
 }

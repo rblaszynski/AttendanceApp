@@ -76,10 +76,9 @@ def get_from_calendar():
 
 
 @app.route('/api/students/all', methods=['POST'])
-def read_from_file(filename):
-    f = open(filename, 'r')
-    print(f.read())
-    return jsonify(filename=filename), {"Content-Type": "application/json"}
+def read_from_file():
+    print(request.files.get('myFileName').filename)
+    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
 
 if __name__ == '__main__':
