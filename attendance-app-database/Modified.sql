@@ -2,7 +2,7 @@
 ALTER TABLE Obecnosci 
 DROP COLUMN "isPresent"
 
-SP_RENAME 'Obecnosci.test','przedmiot'
+SP_RENAME 'Obecnosci.lokalizacja','przedmiot'
 
 ALTER TABLE Obecnosci
 ADD "grupa" varchar(4)
