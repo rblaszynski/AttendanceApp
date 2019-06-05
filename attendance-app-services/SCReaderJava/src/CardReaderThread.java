@@ -2,6 +2,7 @@ import javax.smartcardio.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.sql.*;
 
 public class CardReaderThread implements Runnable {
 
@@ -13,6 +14,12 @@ public class CardReaderThread implements Runnable {
     public void run() {
         running = new AtomicBoolean(Boolean.TRUE);
         try {
+            Class.forName("com.microsoft.jdbc.sqlserver.jdbc.SQLServerDriver");
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=AttendanceApp_db";
+            String user = "SA";
+            String password = "WartaPoznan1912!";
+            Connection con = DriverManager.getConnection(connectionUrl, user, password);
+
             TerminalFactory factory = TerminalFactory.getDefault();
             List<CardTerminal> terminals = factory.terminals().list();
             System.out.println("Terminals: " + terminals);
@@ -36,6 +43,9 @@ public class CardReaderThread implements Runnable {
                 byte[] ICSerialNumber = Arrays.copyOfRange(data, 15, 19);
 
                 System.out.println(hexToString(ICSerialNumber));
+                //String queryCheck = "SELECT * from Obecnosci WHERE nr_legitymacji = " + hexToString(ICSerialNumber);
+                //Statement st = con.createStatement();
+                //ResultSet rs = st.executeQuery(queryCheck); // execute the query, and get a java resultset
                 //hexToString(ICSerialNumber) to nasz numer karty
 
                 while (reader.isCardPresent()) {
@@ -47,7 +57,14 @@ public class CardReaderThread implements Runnable {
 
         } catch (CardException e) {
             e.printStackTrace();
+        } //catch (SQLException e) {
+        catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+        //e.printStackTrace();
+        //}
     }
 
     private String hexToString(final byte[] data) {
