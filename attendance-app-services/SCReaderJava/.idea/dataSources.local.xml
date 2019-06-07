@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Microsoft SQL Server - AttendanceApp_db@localhost" uuid="3d177373-259d-4912-a7be-64d03a177815">
+    <data-source name="AttendanceApp_db@localhost" uuid="6c634a41-d55c-46b2-93a0-16d2f98664f4">
       <database-info product="Microsoft SQL Server" version="14.00.3162" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 7.2 for SQL Server" driver-version="7.2.1.0" dbms="MSSQL" exact-version="14.0.3162" exact-driver-version="7.2">
         <extra-name-characters>$#@</extra-name-characters>
         <identifier-quote-string>&quot;</identifier-quote-string>
@@ -9,7 +9,7 @@
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <user-name>SA</user-name>
-      <introspection-schemas>AttendanceApp_db:dbo</introspection-schemas>
+      <introspection-schemas>@:@</introspection-schemas>
     </data-source>
   </component>
 </project>

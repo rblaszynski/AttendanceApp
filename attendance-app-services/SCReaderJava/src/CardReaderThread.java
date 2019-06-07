@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.sql.*;
+import com.microsoft.sqlserver.jdbc.*;
 
 public class CardReaderThread implements Runnable {
 
@@ -14,10 +15,10 @@ public class CardReaderThread implements Runnable {
     public void run() {
         running = new AtomicBoolean(Boolean.TRUE);
         try {
-            Class.forName("com.microsoft.jdbc.sqlserver.jdbc.SQLServerDriver");
+            //Class.forName("com.microsoft.sqlserver.jdbc");
             String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=AttendanceApp_db";
-            String user = "SA";
-            String password = "WartaPoznan1912!";
+            String user = "SA"; //login
+            String password = "WartaPoznan1912!"; //hasło
             Connection con = DriverManager.getConnection(connectionUrl, user, password);
 
             TerminalFactory factory = TerminalFactory.getDefault();
@@ -43,9 +44,15 @@ public class CardReaderThread implements Runnable {
                 byte[] ICSerialNumber = Arrays.copyOfRange(data, 15, 19);
 
                 System.out.println(hexToString(ICSerialNumber));
-                //String queryCheck = "SELECT * from Obecnosci WHERE nr_legitymacji = " + hexToString(ICSerialNumber);
-                //Statement st = con.createStatement();
-                //ResultSet rs = st.executeQuery(queryCheck); // execute the query, and get a java resultset
+                //podaj pełną ścieżkę do tabeli (database.schema.table)
+                String queryCheck = "UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE nr_legitymacji = \'" + hexToString(ICSerialNumber) + "\'";
+                Statement st = con.createStatement();
+                st.executeUpdate(queryCheck);
+//                while(rs.next())
+//                {
+//                    System.out.print(rs.getString(1)); //or rs.getString("column name");
+//                }
+
                 //hexToString(ICSerialNumber) to nasz numer karty
 
                 while (reader.isCardPresent()) {
@@ -59,8 +66,6 @@ public class CardReaderThread implements Runnable {
             e.printStackTrace();
         } //catch (SQLException e) {
         catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         //e.printStackTrace();
