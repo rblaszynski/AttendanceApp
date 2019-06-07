@@ -16,6 +16,8 @@ public class CardReaderThread implements Runnable {
         running = new AtomicBoolean(Boolean.TRUE);
         try {
             //Class.forName("com.microsoft.sqlserver.jdbc");
+            //trzeba dodać plik .jar z jdbc do bibliotek globalnych
+            //File/Project Structure/Global Libaries
             String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=AttendanceApp_db";
             String user = "SA"; //login
             String password = "WartaPoznan1912!"; //hasło
@@ -46,14 +48,16 @@ public class CardReaderThread implements Runnable {
                 System.out.println(hexToString(ICSerialNumber));
                 //podaj pełną ścieżkę do tabeli (database.schema.table)
                 String queryCheck = "UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE nr_legitymacji = \'" + hexToString(ICSerialNumber) + "\'";
+                //String nameSql = "SELECT Imie, Nazwisko FROM AttendanceApp_db.dbo.Obecnosci WHERE nr_legitymacji = '\" + hexToString(ICSerialNumber) + \"\\'";
                 Statement st = con.createStatement();
+                //Statement st1 = con.createStatement();
                 st.executeUpdate(queryCheck);
-//                while(rs.next())
-//                {
-//                    System.out.print(rs.getString(1)); //or rs.getString("column name");
-//                }
+                //ResultSet rs = st1.executeQuery(nameSql);
 
-                //hexToString(ICSerialNumber) to nasz numer karty
+                //while(rs.next()) {
+                //    System.out.println(rs.getString(1));
+                //}
+
 
                 while (reader.isCardPresent()) {
                     if (!running.get()) {
