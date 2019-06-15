@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="AttendanceApp_db@localhost">
+  <database-model serializer="dbm" dbms="MSSQL" family-id="MSSQL" format-version="4.15">
+    <root id="1">
+      <ServerVersion>14.0.3162</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="AttendanceApp_db">
+      <ObjectId>5</ObjectId>
+      <Current>1</Current>
+      <Visible>1</Visible>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+      <Fingerprint>5.43620/4FBAB658-FCE7-48D9-BFE5-EF0B47B1DAF6@przemyslawb-pc</Fingerprint>
+    </database>
+    <database id="3" parent="1" name="master">
+      <ObjectId>1</ObjectId>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+    </database>
+    <database id="4" parent="1" name="model">
+      <ObjectId>3</ObjectId>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+    </database>
+    <database id="5" parent="1" name="msdb">
+      <ObjectId>4</ObjectId>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+    </database>
+    <database id="6" parent="1" name="tempdb">
+      <ObjectId>2</ObjectId>
+      <Collation>SQL_Latin1_General_CP1_CI_AS</Collation>
+    </database>
+    <schema id="7" parent="2" name="INFORMATION_SCHEMA">
+      <ObjectId>3</ObjectId>
+    </schema>
+    <schema id="8" parent="2" name="db_accessadmin">
+      <ObjectId>16385</ObjectId>
+    </schema>
+    <schema id="9" parent="2" name="db_backupoperator">
+      <ObjectId>16389</ObjectId>
+    </schema>
+    <schema id="10" parent="2" name="db_datareader">
+      <ObjectId>16390</ObjectId>
+    </schema>
+    <schema id="11" parent="2" name="db_datawriter">
+      <ObjectId>16391</ObjectId>
+    </schema>
+    <schema id="12" parent="2" name="db_ddladmin">
+      <ObjectId>16387</ObjectId>
+    </schema>
+    <schema id="13" parent="2" name="db_denydatareader">
+      <ObjectId>16392</ObjectId>
+    </schema>
+    <schema id="14" parent="2" name="db_denydatawriter">
+      <ObjectId>16393</ObjectId>
+    </schema>
+    <schema id="15" parent="2" name="db_owner">
+      <ObjectId>16384</ObjectId>
+    </schema>
+    <schema id="16" parent="2" name="db_securityadmin">
+      <ObjectId>16386</ObjectId>
+    </schema>
+    <schema id="17" parent="2" name="dbo">
+      <ObjectId>1</ObjectId>
+      <IntrospectionTimestamp>2019-06-05.18:41:18.583</IntrospectionTimestamp>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="18" parent="2" name="guest">
+      <ObjectId>2</ObjectId>
+    </schema>
+    <schema id="19" parent="2" name="sys">
+      <ObjectId>4</ObjectId>
+    </schema>
+    <table id="20" parent="17" name="Obecnosci">
+      <ObjectId>917578307</ObjectId>
+      <CreatedTimestamp>2019-06-05.14:45:23.220</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.15:01:37.713</ModifiedTimestamp>
+    </table>
+    <table id="21" parent="17" name="Obecnosci_Studentow">
+      <ObjectId>949578421</ObjectId>
+      <CreatedTimestamp>2019-06-05.14:45:23.227</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.227</ModifiedTimestamp>
+    </table>
+    <table id="22" parent="17" name="Studenci">
+      <ObjectId>885578193</ObjectId>
+      <CreatedTimestamp>2019-06-05.14:45:23.187</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.230</ModifiedTimestamp>
+    </table>
+    <column id="23" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="20" name="data">
+      <Position>2</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="20" name="przedmiot">
+      <Position>3</Position>
+      <DataType>varchar(25 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="20" name="nr_legitymacji">
+      <Position>4</Position>
+      <DataType>varchar(50 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="27" parent="20" name="grupa">
+      <Position>5</Position>
+      <DataType>varchar(4 char)|0s</DataType>
+    </column>
+    <column id="28" parent="20" name="startZajec">
+      <Position>6</Position>
+      <DataType>varchar(5 char)|0s</DataType>
+    </column>
+    <column id="29" parent="20" name="koniecZajec">
+      <Position>7</Position>
+      <DataType>varchar(5 char)|0s</DataType>
+    </column>
+    <column id="30" parent="20" name="isPresent">
+      <Position>8</Position>
+      <DataType>bit|0s</DataType>
+    </column>
+    <index id="31" parent="20" name="PK__Obecnosc__3213E83F481E77BA">
+      <Position>1</Position>
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="32" parent="20" name="PK__Obecnosc__3213E83F481E77BA">
+      <ObjectId>933578364</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2019-06-05.14:45:23.223</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.223</ModifiedTimestamp>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>PK__Obecnosc__3213E83F481E77BA</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="33" parent="21" name="id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="21" name="id_studenta">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="21" name="id_obecnosci">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="36" parent="21" name="PK__Obecnosc__3213E83F47F240E1">
+      <Position>1</Position>
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="37" parent="21" name="PK__Obecnosc__3213E83F47F240E1">
+      <ObjectId>965578478</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2019-06-05.14:45:23.230</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.230</ModifiedTimestamp>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>PK__Obecnosc__3213E83F47F240E1</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="38" parent="21" name="FK__Obecnosci__id_st__3A81B327">
+      <ObjectId>981578535</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2019-06-05.14:45:23.230</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.230</ModifiedTimestamp>
+      <ColNames>id_studenta</ColNames>
+      <RefTableId>885578193</RefTableId>
+      <RefSchemaName>dbo</RefSchemaName>
+      <RefTableName>Studenci</RefTableName>
+      <RefKeyName>PK__Studenci__3213E83F49D55643</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="39" parent="21" name="FK__Obecnosci__id_ob__3B75D760">
+      <ObjectId>997578592</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2019-06-05.14:45:23.230</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.230</ModifiedTimestamp>
+      <ColNames>id_obecnosci</ColNames>
+      <RefTableId>917578307</RefTableId>
+      <RefSchemaName>dbo</RefSchemaName>
+      <RefTableName>Obecnosci</RefTableName>
+      <RefKeyName>PK__Obecnosc__3213E83F481E77BA</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="40" parent="22" name="id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="22" name="imie">
+      <Position>2</Position>
+      <DataType>varchar(25 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="22" name="nazwisko">
+      <Position>3</Position>
+      <DataType>varchar(25 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="43" parent="22" name="nr_indeksu">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="22" name="nr_legitymacji">
+      <Position>5</Position>
+      <DataType>varchar(50 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="45" parent="22" name="PK__Studenci__3213E83F49D55643">
+      <Position>1</Position>
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="46" parent="22" name="PK__Studenci__3213E83F49D55643">
+      <ObjectId>901578250</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2019-06-05.14:45:23.210</CreatedTimestamp>
+      <ModifiedTimestamp>2019-06-05.14:45:23.210</ModifiedTimestamp>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>PK__Studenci__3213E83F49D55643</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
