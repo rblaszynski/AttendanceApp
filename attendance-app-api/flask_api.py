@@ -81,5 +81,10 @@ def read_from_file():
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
 
+@app.route('/api/student', methods=['POST'])
+def add_new_student():
+    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
+
+
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)

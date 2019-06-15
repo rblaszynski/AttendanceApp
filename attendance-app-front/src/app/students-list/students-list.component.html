@@ -3,11 +3,14 @@
     Upload students list:
   </div>
   <div class="upload-buttons">
-      <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="fileInput.click()">Choose File</button>
-      <input hidden #fileInput (change)="fileChanged($event)" type="file" id="file">
-      <span [innerHTML]="fileName"></span>
-      <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="uploadFile()">Submit</button>
-    </div>
+    <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="fileInput.click()">
+      Choose File
+    </button>
+    <input hidden #fileInput (change)="fileChanged($event)" type="file" id="file">
+    <span [innerHTML]="fileName"></span>
+    <button type="button" mat-raised-button [ngClass]="{'button-dark': darkModeActive}" (click)="uploadFile()">Submit
+    </button>
+  </div>
   <mat-form-field [ngClass]="{'filter-dark': darkModeActive}">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
@@ -36,15 +39,64 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let element; let row; columns: displayedColumns;"
+      <mat-row *matRowDef="let element; columns: displayedColumns;"
                matRipple
                class="element-row"
                (click)="toggleRow(element)"></mat-row>
 
-      <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-               [@detailExpand]="row.element.show ? 'expanded' : 'collapsed'"
+      <mat-row *matRowDef="let element; columns: ['expandedDetail']; when: isExpansionDetailRow"
+               [@detailExpand]="element.show ? 'expanded' : 'collapsed'"
                style="overflow: hidden">
       </mat-row>
     </table>
+  </div>
+
+  <button mat-raised-button *ngIf="formHidden" (click)="addNewStudent()">Add new student</button>
+
+  <div class="new-student">
+    <div class="container" *ngIf="!formHidden">
+      <div>
+        <h1>Student form</h1>
+        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="index" type="number" class="form-control" id="index"
+                     required
+                     [(ngModel)]="student.id" name="index">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" placeholder="Fist name" class="form-control" id="name"
+                     required
+                     [(ngModel)]="student.firstName" name="name">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" placeholder="Last name" class="form-control" id="lastName"
+                     required
+                     [(ngModel)]="student.lastName" name="lastName">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <mat-label>Group</mat-label>
+              <mat-select class="form-control" id="group"
+                          required
+                          [(ngModel)]="student.groups" name="group">
+                <mat-option *ngFor="let gr of groups" [value]="gr">{{gr}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <button type="submit" mat-raised-button [disabled]="!heroForm.form.valid">Submit</button>
+        </form>
+      </div>
+
+    </div>
   </div>
 </div>

@@ -25,6 +25,10 @@ export class StudentsListComponent implements OnInit {
   fileName: string;
   darkModeActive: boolean;
   students: Student[];
+  student: Student;
+  submitted = false;
+  groups = ['TSM', 'PT', 'PZ'];
+  formHidden: boolean;
   isExpansionDetailRow = (i: number, row: Object) => {
     return row.hasOwnProperty('detailRow');
   };
@@ -38,6 +42,8 @@ export class StudentsListComponent implements OnInit {
       this.darkModeActive = value;
     }));
     this.getStudents();
+    this.student = new Student();
+    this.formHidden = true;
   }
 
   getStudents(): void {
@@ -49,10 +55,10 @@ export class StudentsListComponent implements OnInit {
   }
 
   toggleRow(value: Element) {
-    const foundElement = this.dataSource.data.find(elem => elem.element !== undefined && elem.element.id === value.id);
+    const foundElement = this.dataSource.data.find(elem => elem !== undefined && elem.id === value.id);
     console.log("The found element is " + JSON.stringify(foundElement));
     const index = this.dataSource.data.indexOf(foundElement);
-    this.dataSource.data[index].element.show = !this.dataSource.data[index].element.show;
+    this.dataSource.data[index].show = !this.dataSource.data[index].show;
   }
 
   applyFilter(filterValue: string) {
@@ -71,6 +77,21 @@ export class StudentsListComponent implements OnInit {
       this.studentsService.loadFile(fileUploadForm);
     }
   }
+
+  onSubmit() {
+    this.submitted = true;
+    this.formHidden = true;
+    this.students.push(this.student);
+    console.log(this.students);
+    this.dataSource = new MatTableDataSource(this.students);
+    this.studentsService.addStudent(this.student);
+    this.student = new Student();
+  }
+
+  addNewStudent() {
+    this.formHidden = false;
+  }
+
 }
 
 export interface Element {
