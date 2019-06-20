@@ -68,6 +68,14 @@
 
           <div class="form-group">
             <mat-form-field class="example-full-width">
+              <input matInput placeholder="card id" type="text" class="form-control" id="card-id"
+                     required
+                     [(ngModel)]="student.cardId" name="card-id">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
               <input matInput type="text" placeholder="Fist name" class="form-control" id="name"
                      required
                      [(ngModel)]="student.firstName" name="name">
