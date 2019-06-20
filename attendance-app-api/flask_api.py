@@ -2,6 +2,7 @@ import datetime
 from flask import Flask, jsonify, make_response, request
 import pyodbc
 import json
+import pandas as pd
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
@@ -85,7 +86,8 @@ def default():
 
 @app.route('/api/students/all', methods=['GET'])
 def get_list_of_students():
-    my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group] from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
+    # my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group] from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
+    my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName from Studenci;", )
     # return jsonify('OK'), {"Content-Type": "application/octet-stream"}
     return jsonify(my_query1), {"Content-Type": "application/json"}
     # return jsonify(students), {"Content-Type": "application/json"}
@@ -96,7 +98,7 @@ def get_latest_lecture():
     cur2 = cnxn.cursor()
     cur3 = cnxn.cursor()
 
-    cur2.execute("select className from Obecnosci where nr = 1")
+    cur2.execute("select className from Przedmioty where classID = 1")
     data_class = str(cur2.fetchall())
     # data_class = query_db("select className from Obecnosci where nr = 1")
     cur3.execute("select [group] from Obecnosci where nr = 1")
@@ -113,15 +115,15 @@ def get_latest_lecture():
 @app.route('/api/lecture/latest', methods=['PUT'])
 def update_latest_lecture():
 
-    # i = 0
+    i = 0
     request_data = json.loads(request.data)
     print(request_data)
     print(request_data[0]['id'])
     print(request_data[0]['isPresent'])
     print(request_data[1]['id'])
     print(request_data[1]['isPresent'])
-    cur5 = cnxn.cursor()
-    cur5.execute("""UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE id = '013697D7';""")
+    # cur5 = cnxn.cursor()
+    # cur5.execute("""UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE id = '013697D7';""")
 
 
     # for i in range(1):
@@ -130,11 +132,16 @@ def update_latest_lecture():
     #     cur4.execute("UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = " + bool_to_bit(request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
 
     students_attendance.clear()
-
+    cur4 = cnxn.cursor()
     for s in request_data:
         # j = i + 1
         # cur4.execute("UPDATE Obecnosci SET isPresent = " + str(bit_to_bool(request_data[i]['isPresent'])) + " where nr = " + str(j))
-        # i += 1
+        print("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
+            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+        cur4.execute("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
+            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+        cnxn.commit()
+        i += 1
         students_attendance.append(s)
     print(students_attendance)
     return jsonify(students_attendance), {"Content-Type": "application/json"}
@@ -161,8 +168,26 @@ def bool_to_bit(x):
 
 @app.route('/api/student', methods=['POST'])
 def add_new_student():
+    request_data = json.loads(request.data)
+    print(request_data)
+    print("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
+    cur6 = cnxn.cursor()
+    cur6.execute("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
+    cnxn.commit()
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
+
+@app.route('/api/report', methods=['POST'])
+def generate_report():
+    request_data = json.loads(request.data)
+    print(request_data)
+    cur7 = cnxn.cursor()
+    if request_data['type'] == 'student':
+        df = pd.read_sql("xd", cur7)
+
+    if request_data['type'] == 'class':
+        df = pd.read_sql("xd2", cur7)
+    return jsonify(request_data), {"Content-Type": "application/json"}
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)
