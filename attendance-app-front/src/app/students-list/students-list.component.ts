@@ -92,6 +92,10 @@ export class StudentsListComponent implements OnInit {
     this.formHidden = false;
   }
 
+  exportToCsv() {
+    this.studentsService.exportStudents();
+  }
+
 }
 
 export interface Element {
