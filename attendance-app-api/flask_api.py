@@ -2,6 +2,9 @@ import datetime
 from flask import Flask, jsonify, make_response, request
 import pyodbc
 import json
+import pandas as pd
+pd.set_option('display.max_columns', 20)
+pd.set_option('display.width', 1000)
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
@@ -85,7 +88,8 @@ def default():
 
 @app.route('/api/students/all', methods=['GET'])
 def get_list_of_students():
-    my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group] from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
+    # my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group] from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
+    my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName from Studenci;", )
     # return jsonify('OK'), {"Content-Type": "application/octet-stream"}
     return jsonify(my_query1), {"Content-Type": "application/json"}
     # return jsonify(students), {"Content-Type": "application/json"}
@@ -96,11 +100,13 @@ def get_latest_lecture():
     cur2 = cnxn.cursor()
     cur3 = cnxn.cursor()
 
-    cur2.execute("select className from Obecnosci where nr = 1")
-    data_class = str(cur2.fetchall())
+    cur2.execute("select className from Przedmioty where classID = 1")
+    # print(str(cur2.fetchone()))
+    data_class = str(cur2.fetchone())
     # data_class = query_db("select className from Obecnosci where nr = 1")
     cur3.execute("select [group] from Obecnosci where nr = 1")
-    data_group = str(cur3.fetchall())
+    # print(str(cur3.fetchone()))
+    data_group = str(cur3.fetchone())
     # data_group = query_db("select [group] from Obecnosci where nr = 1")
     my_query3 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group], Obecnosci.isPresent from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
     return jsonify(className=data_class,
@@ -113,15 +119,15 @@ def get_latest_lecture():
 @app.route('/api/lecture/latest', methods=['PUT'])
 def update_latest_lecture():
 
-    # i = 0
+    i = 0
     request_data = json.loads(request.data)
     print(request_data)
     print(request_data[0]['id'])
     print(request_data[0]['isPresent'])
     print(request_data[1]['id'])
     print(request_data[1]['isPresent'])
-    cur5 = cnxn.cursor()
-    cur5.execute("""UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE id = '013697D7';""")
+    # cur5 = cnxn.cursor()
+    # cur5.execute("""UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE id = '013697D7';""")
 
 
     # for i in range(1):
@@ -130,11 +136,16 @@ def update_latest_lecture():
     #     cur4.execute("UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = " + bool_to_bit(request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
 
     students_attendance.clear()
-
+    cur4 = cnxn.cursor()
     for s in request_data:
         # j = i + 1
         # cur4.execute("UPDATE Obecnosci SET isPresent = " + str(bit_to_bool(request_data[i]['isPresent'])) + " where nr = " + str(j))
-        # i += 1
+        print("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
+            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+        cur4.execute("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
+            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+        cnxn.commit()
+        i += 1
         students_attendance.append(s)
     print(students_attendance)
     return jsonify(students_attendance), {"Content-Type": "application/json"}
@@ -161,8 +172,55 @@ def bool_to_bit(x):
 
 @app.route('/api/student', methods=['POST'])
 def add_new_student():
+    request_data = json.loads(request.data)
+    print(request_data)
+    print("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
+    cur6 = cnxn.cursor()
+    cur6.execute("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
+    cnxn.commit()
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
+
+@app.route('/api/report', methods=['POST'])
+def generate_report():
+    request_data = json.loads(request.data)
+    print(request_data)
+    cur7 = cnxn.cursor()
+    if request_data['type'] == 'student':
+        print("SELECT * FROM Obecnosci Where id = \'" + request_data['id'] + '\'')
+        df = pd.read_sql("SELECT * FROM Obecnosci Where id = \'" + str(request_data['id']) + '\'', cnxn)
+        print(df)
+        # pdf = FPDF(orientation='L',format='A4')
+        # pdf.add_page()
+        # # pdf.set_xy(0, 0)
+        # pdf.set_font('arial', 'B', 11.0)
+        # pdf.cell(ln=0, h=0, align='L', w=0, txt=str(df), border=1)
+        # pdf.output('report-student-' + str(request_data['id']) + '.pdf', 'F')
+        f = open('report-student-' + str(request_data['id']) + '.txt', "w")
+        f.write("REPORT FOR STUDENT WITH ID: " + str(request_data['id']) + "\n")
+        f.write("\n" + str(df))
+        f.close()
+        writer = pd.ExcelWriter('excel-student-' + str(request_data['id']) + '.xlsx')
+        df.to_excel(writer, 'DataFrame')
+        writer.save()
+    if request_data['type'] == 'class':
+        print("SELECT * FROM Obecnosci WHERE classID = " + request_data['id'])
+        df = pd.read_sql("SELECT * FROM Obecnosci WHERE classID = " + str(request_data['id']), cnxn)
+        print(df)
+        # pdf = FPDF(orientation='L',format='A4')
+        # pdf.add_page()
+        # pdf.set_xy(20, 20)
+        # pdf.set_font('arial', 'B', 11.0)
+        # pdf.cell(h=0, w=0, txt=str(df), border=1)
+        # pdf.output('report-class-' + str(request_data['id']) + '.pdf', 'F')
+        f = open('report-class-' + str(request_data['id']) + '.txt', "w")
+        f.write("REPORT FOR CLASS WITH ID: " + str(request_data['id']) + "\n")
+        f.write("\n" + str(df))
+        f.close()
+        writer = pd.ExcelWriter('excel-class-' + str(request_data['id']) + '.xlsx')
+        df.to_excel(writer, 'DataFrame')
+        writer.save()
+    return jsonify(request_data), {"Content-Type": "application/json"}
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)
