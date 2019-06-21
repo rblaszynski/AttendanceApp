@@ -3,6 +3,8 @@ from flask import Flask, jsonify, make_response, request
 import pyodbc
 import json
 import pandas as pd
+pd.set_option('display.max_columns', 20)
+pd.set_option('display.width', 1000)
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
@@ -99,10 +101,12 @@ def get_latest_lecture():
     cur3 = cnxn.cursor()
 
     cur2.execute("select className from Przedmioty where classID = 1")
-    data_class = str(cur2.fetchall())
+    # print(str(cur2.fetchone()))
+    data_class = str(cur2.fetchone())
     # data_class = query_db("select className from Obecnosci where nr = 1")
     cur3.execute("select [group] from Obecnosci where nr = 1")
-    data_group = str(cur3.fetchall())
+    # print(str(cur3.fetchone()))
+    data_group = str(cur3.fetchone())
     # data_group = query_db("select [group] from Obecnosci where nr = 1")
     my_query3 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group], Obecnosci.isPresent from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
     return jsonify(className=data_class,
@@ -183,10 +187,39 @@ def generate_report():
     print(request_data)
     cur7 = cnxn.cursor()
     if request_data['type'] == 'student':
-        df = pd.read_sql("xd", cur7)
-
+        print("SELECT * FROM Obecnosci Where id = \'" + request_data['id'] + '\'')
+        df = pd.read_sql("SELECT * FROM Obecnosci Where id = \'" + str(request_data['id']) + '\'', cnxn)
+        print(df)
+        # pdf = FPDF(orientation='L',format='A4')
+        # pdf.add_page()
+        # # pdf.set_xy(0, 0)
+        # pdf.set_font('arial', 'B', 11.0)
+        # pdf.cell(ln=0, h=0, align='L', w=0, txt=str(df), border=1)
+        # pdf.output('report-student-' + str(request_data['id']) + '.pdf', 'F')
+        f = open('report-student-' + str(request_data['id']) + '.txt', "w")
+        f.write("REPORT FOR STUDENT WITH ID: " + str(request_data['id']) + "\n")
+        f.write("\n" + str(df))
+        f.close()
+        writer = pd.ExcelWriter('excel-student-' + str(request_data['id']) + '.xlsx')
+        df.to_excel(writer, 'DataFrame')
+        writer.save()
     if request_data['type'] == 'class':
-        df = pd.read_sql("xd2", cur7)
+        print("SELECT * FROM Obecnosci WHERE classID = " + request_data['id'])
+        df = pd.read_sql("SELECT * FROM Obecnosci WHERE classID = " + str(request_data['id']), cnxn)
+        print(df)
+        # pdf = FPDF(orientation='L',format='A4')
+        # pdf.add_page()
+        # pdf.set_xy(20, 20)
+        # pdf.set_font('arial', 'B', 11.0)
+        # pdf.cell(h=0, w=0, txt=str(df), border=1)
+        # pdf.output('report-class-' + str(request_data['id']) + '.pdf', 'F')
+        f = open('report-class-' + str(request_data['id']) + '.txt', "w")
+        f.write("REPORT FOR CLASS WITH ID: " + str(request_data['id']) + "\n")
+        f.write("\n" + str(df))
+        f.close()
+        writer = pd.ExcelWriter('excel-class-' + str(request_data['id']) + '.xlsx')
+        df.to_excel(writer, 'DataFrame')
+        writer.save()
     return jsonify(request_data), {"Content-Type": "application/json"}
 
 if __name__ == '__main__':
