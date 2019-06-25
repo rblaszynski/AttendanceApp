@@ -39,7 +39,6 @@ my_query = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, 
 print(my_query)
 
 
-
 app = Flask(__name__, static_url_path="")
 students = [
     {'id': 111111, 'firstName': 'Michał', 'lastName': 'Andrzejewski', 'group': 'TI-1'},
@@ -102,7 +101,7 @@ def get_latest_lecture():
     a2 = str(cur3.fetchone())
     b2 = a2.rstrip("\'), ")
     data_group = b2.lstrip("(\'")
-    my_query3 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group], Obecnosci.isPresent from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
+    my_query3 = query_db("select Studenci.nr_indeksu, Studenci.firstName, Studenci.lastName, Obecnosci.[group], Obecnosci.isPresent from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
     return jsonify(className=data_class,
                    classGroupName=data_group,
                    classStartDate=datetime.datetime.now(),
@@ -116,18 +115,18 @@ def update_latest_lecture():
     i = 0
     request_data = json.loads(request.data)
     print(request_data)
-    print(request_data[0]['id'])
+    print(request_data[0]['nr_indeksu'])
     print(request_data[0]['isPresent'])
-    print(request_data[1]['id'])
+    print(request_data[1]['nr_indeksu'])
     print(request_data[1]['isPresent'])
 
     students_attendance.clear()
     cur4 = cnxn.cursor()
     for s in request_data:
         print("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
-            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+            request_data[i]['isPresent']) + "from Obecnosci, Studenci where Obecnosci.id = Studenci.id and Studenci.nr_indeksu = " + str(request_data[i]['nr_indeksu']))
         cur4.execute("UPDATE Obecnosci SET isPresent = " + bool_to_bit(
-            request_data[i]['isPresent']) + " where id = \'" + str(request_data[i]['id']) + "\';")
+            request_data[i]['isPresent']) + "from Obecnosci, Studenci where Obecnosci.id = Studenci.id and Studenci.nr_indeksu = " + str(request_data[i]['nr_indeksu']))
         cnxn.commit()
         i += 1
         students_attendance.append(s)
@@ -171,29 +170,41 @@ def generate_report():
     cur11 = cnxn.cursor()
     cur12 = cnxn.cursor()
     if request_data['type'] == 'student':
-        print("select nr_indeksu from Studenci where id = \'" + request_data['id'] + '\'')
-        cur11.execute("select nr_indeksu from Studenci where id = \'" + request_data['id'] + '\'')
+        print("select lastName from Studenci where nr_indeksu = \'" + str(request_data['id']) + '\'')
+        cur11.execute("select lastName from Studenci where nr_indeksu = \'" + str(request_data['id']) + '\'')
         a = str(cur11.fetchone())
         b = a.rstrip("\'), ")
         x = b.lstrip("(\'")
-        print("SELECT * FROM Obecnosci Where id = \'" + request_data['id'] + '\'')
-        df = pd.read_sql("SELECT * FROM Obecnosci Where id = \'" + str(request_data['id']) + '\'', cnxn)
+        print("select Przedmioty.classID, Przedmioty.className, Obecnosci.[group], Obecnosci.[data], "
+                         "Obecnosci.classStartDate, Obecnosci.classEndDate, Obecnosci.isPresent from Studenci, "
+                         "Obecnosci, Przedmioty where nr_indeksu = \'" + str(request_data['id']) + '\'' +"and Studenci.id = Obecnosci.id and Przedmioty.classID = Obecnosci.classID")
+        df = pd.read_sql("select Przedmioty.classID, Przedmioty.className, Obecnosci.[group], Obecnosci.[data], "
+                         "Obecnosci.classStartDate, Obecnosci.classEndDate, Obecnosci.isPresent from Studenci, "
+                         "Obecnosci, Przedmioty where nr_indeksu = \'" + str(request_data['id']) + '\'' +"and Studenci.id = Obecnosci.id and Przedmioty.classID = Obecnosci.classID", cnxn)
         print(df)
         f = open('report-student-' + str(x) + '.txt', "w")
         f.write("REPORT FOR STUDENT WITH ID: " + str(request_data['id']) + "\n")
+        f.write("STUDENT SURNAME: " + str(x) + "\n")
         f.write("\n" + str(df))
         f.close()
         writer = pd.ExcelWriter('excel-student-' + str(x) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
+        file_data = codecs.open('report-student-' + str(x) + '.txt', 'rb').read()
+        response = make_response()
+        response.data = file_data
     if request_data['type'] == 'class':
         print("select className from Przedmioty where classID = \'" + request_data['id'] + '\'')
         cur12.execute("select className from Przedmioty where classID = " + request_data['id'])
         a = str(cur12.fetchone())
         b = a.rstrip("\'), ")
         x = b.lstrip("(\'")
-        print("SELECT * FROM Obecnosci WHERE classID = " + request_data['id'])
-        df = pd.read_sql("SELECT * FROM Obecnosci WHERE classID = " + str(request_data['id']), cnxn)
+        print("select Studenci.nr_indeksu, Studenci.lastName, Studenci.firstName, Obecnosci.[group], "
+                         "Obecnosci.[data], Obecnosci.classStartDate, Obecnosci.classEndDate, "
+                         "Obecnosci.isPresent from Studenci, Obecnosci where classID = " + str(request_data['id']) +" and Studenci.id = Obecnosci.id")
+        df = pd.read_sql("select Studenci.nr_indeksu, Studenci.lastName, Studenci.firstName, Obecnosci.[group], "
+                         "Obecnosci.[data], Obecnosci.classStartDate, Obecnosci.classEndDate, "
+                         "Obecnosci.isPresent from Studenci, Obecnosci where classID = " + str(request_data['id']) +" and Studenci.id = Obecnosci.id", cnxn)
         print(df)
         f = open('report-class-' + str(x) + '.txt', "w")
         f.write("REPORT FOR CLASS WITH ID: " + str(request_data['id']) + "\n")
@@ -202,9 +213,9 @@ def generate_report():
         writer = pd.ExcelWriter('excel-class-' + str(x) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
-    file_data = codecs.open('report-class-' + str(request_data['id']) + '.txt', 'rb').read()
-    response = make_response()
-    response.data = file_data
+        file_data = codecs.open('report-class-' + str(x) + '.txt', 'rb').read()
+        response = make_response()
+        response.data = file_data
     return response, 200, {"Content-Type": "blob"}
 
 @app.route('/api/students/file', methods=['GET'])
@@ -233,10 +244,14 @@ def get_last_card_id():
 @app.route('/api/students/file', methods=['POST'])
 def read_from_file():
     print(request.files.get('myFileName').filename)
+    file = request.files['myFileName']
+    if file:
+        filename = file.filename
+        file.save(filename)
     cur13 = cnxn.cursor()
     cur13.execute("TRUNCATE TABLE Studenci")
     cnxn.commit()
-    with open('Students_List.csv') as csv_file:
+    with open(filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row1 in csv_reader:
