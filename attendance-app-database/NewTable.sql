@@ -1,4 +1,3 @@
-
 CREATE TABLE cardID(
 id int IDENTITY(1,1),
 lastCardID varchar(20) NOT NULL
