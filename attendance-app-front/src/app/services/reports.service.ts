@@ -16,8 +16,7 @@ export class ReportsService {
     this.http.post(this.reportUrl, data, {responseType: 'blob'})
       .subscribe(res => {
         let blob = new Blob([res], {type: 'text'});
-        let fileName = data.type + '_report.txt';
-        saveAs(blob, fileName);
+        saveAs(blob, data.fileName);
       });
   }
 

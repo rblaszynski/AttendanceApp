@@ -19,6 +19,8 @@ export class ReportComponent implements OnInit {
   reportId: number;
   reportType: string;
   selected: string;
+  selectedStudent: Student;
+  selectedClass: any;
 
   constructor(private reportService: ReportsService, private studentsService: StudentsService) {
   }
@@ -38,8 +40,23 @@ export class ReportComponent implements OnInit {
   }
 
   generateReport() {
-    const report: Report = {id: this.reportId, type: this.selected};
+    let report;
+    if (this.selected === 'student') {
+      const filename = this.getFileName(this.selectedStudent.lastName, this.selectedStudent.nr_indeksu);
+      report = {id: this.selectedStudent.nr_indeksu, type: this.selected, fileName: filename};
+    } else {
+      const filename = this.getFileName(this.selectedClass.viewValue, null);
+      report = {id: this.selectedClass.id, type: this.selected, fileName: filename};
+    }
     this.reportService.generateReport(report);
+  }
+
+  getFileName(reportName, id) {
+    if (id != null) {
+      return 'Attendance_report_' + reportName + '_' + id + '.txt';
+    } else {
+      return 'Attendance_report_' + reportName + '.txt';
+    }
   }
 }
 

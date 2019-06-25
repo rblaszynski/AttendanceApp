@@ -9,8 +9,8 @@
   <div class="student-container" *ngIf="selected==='student'">
     <mat-label>Student </mat-label>
     <mat-form-field>
-      <mat-select [(ngModel)]="reportId">
-        <mat-option *ngFor="let student of students" [value]="student.nr_indeksu">
+      <mat-select [(ngModel)]="selectedStudent">
+        <mat-option *ngFor="let student of students" [value]="student">
           {{student.firstName}} {{student.lastName}}
         </mat-option>
       </mat-select>
@@ -20,8 +20,8 @@
   <div class="student-container" *ngIf="selected==='class'">
     <mat-label>Class </mat-label>
     <mat-form-field>
-      <mat-select [(ngModel)]="reportId">
-        <mat-option *ngFor="let class of classes" [value]="class.id">
+      <mat-select [(ngModel)]="selectedClass">
+        <mat-option *ngFor="let class of classes" [value]="class">
           {{class.viewValue}}
         </mat-option>
       </mat-select>
