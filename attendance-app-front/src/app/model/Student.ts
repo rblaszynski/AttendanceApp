@@ -3,6 +3,6 @@ export class Student {
   lastName: string;
   groups: [];
   id: number;
-  cardId: number;
-  nr_indeksu: number
+  cardId: string;
+  nr_indeksu: number;
 }
