@@ -222,6 +222,15 @@ def generate_report():
         writer.save()
     return jsonify(request_data), {"Content-Type": "application/json"}
 
+@app.route('/api/students/file', methods=['GET'])
+def export_students_list():
+    print("SELECT * FROM Studenci")
+    df1 = pd.read_sql("SELECT * FROM Studenci", cnxn)
+    print(df1)
+    df1.to_csv(r'Students_List.csv')
+    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
+
+
 
 @app.route('/api/card/recent', methods=['GET'])
 def get_last_card_id():
