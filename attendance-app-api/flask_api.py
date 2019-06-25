@@ -190,7 +190,10 @@ def generate_report():
         writer = pd.ExcelWriter('excel-class-' + str(request_data['id']) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
-    return jsonify(request_data), {"Content-Type": "application/json"}
+    file_data = codecs.open('report-class-' + str(request_data['id']) + '.txt', 'rb').read()
+    response = make_response()
+    response.data = file_data
+    return response, 200, {"Content-Type": "blob"}
 
 @app.route('/api/students/file', methods=['GET'])
 def export_students_list():
