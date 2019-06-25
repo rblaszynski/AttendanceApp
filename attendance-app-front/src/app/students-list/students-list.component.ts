@@ -19,7 +19,7 @@ import {Student} from "../model/Student";
   ],
 })
 export class StudentsListComponent implements OnInit {
-  displayedColumns = ['id', 'firstName', 'lastName'];
+  displayedColumns = ['nr_indeksu', 'firstName', 'lastName'];
   dataSource: MatTableDataSource<any>;
   file: any;
   fileName: string;

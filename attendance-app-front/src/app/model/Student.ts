@@ -4,4 +4,5 @@ export class Student {
   groups: [];
   id: number;
   cardId: number;
+  nr_indeksu: number
 }

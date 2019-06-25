@@ -9,7 +9,7 @@ pd.set_option('display.width', 1000)
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
 server = 'localhost'
-database = 'AttendanceApp_db'
+database = 'AttendanceApp_db4'
 username = 'root'
 password = 'root'
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
@@ -89,7 +89,8 @@ def default():
 @app.route('/api/students/all', methods=['GET'])
 def get_list_of_students():
     # my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group] from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
-    my_query1 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName from Studenci;", )
+    my_query1 = query_db("select Studenci.nr_indeksu, Studenci.firstName, Studenci.lastName from Studenci;", )
+    print(my_query1)
     # return jsonify('OK'), {"Content-Type": "application/octet-stream"}
     return jsonify(my_query1), {"Content-Type": "application/json"}
     # return jsonify(students), {"Content-Type": "application/json"}

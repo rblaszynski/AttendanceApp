@@ -17,9 +17,9 @@
   <div class="example-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="{'mat-table-dark': darkModeActive}">
 
-      <ng-container matColumnDef="id">
+      <ng-container matColumnDef="nr_indeksu">
         <mat-header-cell style="min-width:100px" *matHeaderCellDef>Id</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.nr_indeksu}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="firstName">
