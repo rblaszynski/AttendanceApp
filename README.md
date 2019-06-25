@@ -1,5 +1,5 @@
 # AttendanceApp
-[Link do pełnej dokumentacji](https://drive.google.com/file/d/16B0LYUl-gTOtV7ZgwHuTNtm46wqHhNsa/view?usp=sharing)
+[Link do pełnej dokumentacji](https://drive.google.com/file/d/1hedGD157D5U50MYiw1PjYo2CqJ13QbHH/view?usp=sharing)
 ## Overview
 Sprawdzanie obecności w laboratorium z wykorzystaniem legitymacji studenckiej
 
@@ -19,7 +19,6 @@ ng serve ```attendance-app-front```
 
 go to ```localhost:4200``` in your browser
 
-All files like reports will be generated in folder ```attendance-app-api```
 ## Built With
 
 * [Angular](https://angular.io/) - Web framework
