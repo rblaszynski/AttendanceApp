@@ -1,3 +1,4 @@
+import codecs
 import datetime
 import json
 import pandas as pd
@@ -195,7 +196,10 @@ def export_students_list():
     df1 = pd.read_sql("SELECT * FROM Studenci", cnxn)
     print(df1)
     df1.to_csv(r'Students_List.csv')
-    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
+    file_data = codecs.open('Students_List.csv', 'rb').read()
+    response = make_response()
+    response.data = file_data
+    return response, {"Content-Type": "blob"}
 
 @app.route('/api/card/recent', methods=['GET'])
 def get_last_card_id():
