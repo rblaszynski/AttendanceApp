@@ -3,5 +3,5 @@ export class Student {
   lastName: string;
   groups: [];
   id: number;
-  cardId: number;
+  cardId: string;
 }

@@ -1,8 +1,8 @@
 import datetime
-from flask import Flask, jsonify, make_response, request
-import pyodbc
 import json
 import pandas as pd
+from flask import Flask, jsonify, make_response, request
+
 pd.set_option('display.max_columns', 20)
 pd.set_option('display.width', 1000)
 # Some other example server values are
@@ -221,6 +221,13 @@ def generate_report():
         df.to_excel(writer, 'DataFrame')
         writer.save()
     return jsonify(request_data), {"Content-Type": "application/json"}
+
+
+@app.route('/api/card/recent', methods=['GET'])
+def get_last_card_id():
+    x = '123ABC'
+    return jsonify(x), {"Content-Type": "application/json"}
+
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)
