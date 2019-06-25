@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Student} from "../model/Student";
+import {saveAs} from "file-saver";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,10 @@ export class StudentsService {
   }
 
   exportStudents(): void {
-    this.http.get(this.filesUrl).subscribe();
+    this.http.get(this.filesUrl, {responseType: 'blob'}).subscribe(res => {
+      let blob = new Blob([res], {type: "text/csv"});
+      saveAs(blob, 'Students_list.csv');
+    });
   }
 
   getLastCardID(): Observable<string> {
