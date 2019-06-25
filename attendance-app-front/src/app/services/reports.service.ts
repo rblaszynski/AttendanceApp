@@ -13,7 +13,7 @@ export class ReportsService {
   }
 
   generateReport(data): void {
-    this.http.post(this.reportUrl, data)
+    this.http.post(this.reportUrl, data, {responseType: 'blob'})
       .subscribe(res => {
         let blob = new Blob([res], {type: 'text'});
         let fileName = data.type + '_report.txt';
