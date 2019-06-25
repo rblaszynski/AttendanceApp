@@ -1,3 +1,4 @@
+import codecs
 import datetime
 import json
 import pandas as pd
@@ -166,27 +167,38 @@ def add_new_student():
 def generate_report():
     request_data = json.loads(request.data)
     print(request_data)
-    cur7 = cnxn.cursor()
+    cur11 = cnxn.cursor()
+    cur12 = cnxn.cursor()
     if request_data['type'] == 'student':
+        print("select nr_indeksu from Studenci where id = \'" + request_data['id'] + '\'')
+        cur11.execute("select nr_indeksu from Studenci where id = \'" + request_data['id'] + '\'')
+        a = str(cur11.fetchone())
+        b = a.rstrip("\'), ")
+        x = b.lstrip("(\'")
         print("SELECT * FROM Obecnosci Where id = \'" + request_data['id'] + '\'')
         df = pd.read_sql("SELECT * FROM Obecnosci Where id = \'" + str(request_data['id']) + '\'', cnxn)
         print(df)
-        f = open('report-student-' + str(request_data['id']) + '.txt', "w")
+        f = open('report-student-' + str(x) + '.txt', "w")
         f.write("REPORT FOR STUDENT WITH ID: " + str(request_data['id']) + "\n")
         f.write("\n" + str(df))
         f.close()
-        writer = pd.ExcelWriter('excel-student-' + str(request_data['id']) + '.xlsx')
+        writer = pd.ExcelWriter('excel-student-' + str(x) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
     if request_data['type'] == 'class':
+        print("select className from Przedmioty where classID = \'" + request_data['id'] + '\'')
+        cur12.execute("select className from Przedmioty where classID = " + request_data['id'])
+        a = str(cur12.fetchone())
+        b = a.rstrip("\'), ")
+        x = b.lstrip("(\'")
         print("SELECT * FROM Obecnosci WHERE classID = " + request_data['id'])
         df = pd.read_sql("SELECT * FROM Obecnosci WHERE classID = " + str(request_data['id']), cnxn)
         print(df)
-        f = open('report-class-' + str(request_data['id']) + '.txt', "w")
+        f = open('report-class-' + str(x) + '.txt', "w")
         f.write("REPORT FOR CLASS WITH ID: " + str(request_data['id']) + "\n")
         f.write("\n" + str(df))
         f.close()
-        writer = pd.ExcelWriter('excel-class-' + str(request_data['id']) + '.xlsx')
+        writer = pd.ExcelWriter('excel-class-' + str(x) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
     return jsonify(request_data), {"Content-Type": "application/json"}
@@ -197,7 +209,10 @@ def export_students_list():
     df1 = pd.read_sql("SELECT * FROM Studenci", cnxn)
     print(df1)
     df1.to_csv(r'Students_List.csv')
-    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
+    file_data = codecs.open('Students_List.csv', 'rb').read()
+    response = make_response()
+    response.data = file_data
+    return response, {"Content-Type": "blob"}
 
 @app.route('/api/card/recent', methods=['GET'])
 def get_last_card_id():
