@@ -9,7 +9,7 @@ pd.set_option('display.width', 1000)
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
 server = 'localhost'
-database = 'AttendanceApp_db'
+database = 'AttendanceApp_db4'
 username = 'root'
 password = 'root'
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
@@ -231,6 +231,10 @@ def export_students_list():
     df1.to_csv(r'Students_List.csv')
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
+@app.route('/api/card/recent', methods=['GET'])
+def get_last_card_id():
+    x = '123ABC'
+    return jsonify(x), {"Content-Type": "application/json"}
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)

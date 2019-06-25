@@ -1,4 +1,8 @@
 import javax.smartcardio.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,9 +22,9 @@ public class CardReaderThread implements Runnable {
             //Class.forName("com.microsoft.sqlserver.jdbc");
             //trzeba dodać plik .jar z jdbc do bibliotek globalnych
             //File/Project Structure/Global Libaries
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=AttendanceApp_db";
-            String user = "SA"; //login
-            String password = "WartaPoznan1912!"; //hasło
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=AttendanceApp_db4";
+            String user = "root"; //login
+            String password = "root"; //hasło
             Connection con = DriverManager.getConnection(connectionUrl, user, password);
 
             TerminalFactory factory = TerminalFactory.getDefault();
@@ -47,11 +51,17 @@ public class CardReaderThread implements Runnable {
 
                 System.out.println(hexToString(ICSerialNumber));
                 //podaj pełną ścieżkę do tabeli (database.schema.table)
-                String queryCheck = "UPDATE AttendanceApp_db.dbo.Obecnosci SET isPresent = 1 WHERE nr_legitymacji = \'" + hexToString(ICSerialNumber) + "\'";
+                String queryCheck = "UPDATE AttendanceApp_db4.dbo.Obecnosci SET isPresent = 1 WHERE id = \'" + hexToString(ICSerialNumber) + "\'";
                 //String nameSql = "SELECT Imie, Nazwisko FROM AttendanceApp_db.dbo.Obecnosci WHERE nr_legitymacji = '\" + hexToString(ICSerialNumber) + \"\\'";
                 Statement st = con.createStatement();
                 //Statement st1 = con.createStatement();
                 st.executeUpdate(queryCheck);
+
+                String queryCheck1 = "UPDATE AttendanceApp_db4.dbo.cardID SET lastCardID = \'" + hexToString(ICSerialNumber) + "\' WHERE id = 1";
+                //String nameSql = "SELECT Imie, Nazwisko FROM AttendanceApp_db.dbo.Obecnosci WHERE nr_legitymacji = '\" + hexToString(ICSerialNumber) + \"\\'";
+                Statement st1 = con.createStatement();
+                //Statement st1 = con.createStatement();
+                st1.executeUpdate(queryCheck1);
                 //ResultSet rs = st1.executeQuery(nameSql);
 
                 //while(rs.next()) {
