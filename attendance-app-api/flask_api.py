@@ -1,4 +1,5 @@
 import codecs
+import csv
 import datetime
 import json
 import pandas as pd
@@ -201,7 +202,10 @@ def generate_report():
         writer = pd.ExcelWriter('excel-class-' + str(x) + '.xlsx')
         df.to_excel(writer, 'DataFrame')
         writer.save()
-    return jsonify(request_data), {"Content-Type": "application/json"}
+    file_data = codecs.open('report-class-' + str(request_data['id']) + '.txt', 'rb').read()
+    response = make_response()
+    response.data = file_data
+    return response, 200, {"Content-Type": "blob"}
 
 @app.route('/api/students/file', methods=['GET'])
 def export_students_list():
@@ -229,6 +233,24 @@ def get_last_card_id():
 @app.route('/api/students/file', methods=['POST'])
 def read_from_file():
     print(request.files.get('myFileName').filename)
+    cur13 = cnxn.cursor()
+    cur13.execute("TRUNCATE TABLE Studenci")
+    cnxn.commit()
+    with open('Students_List.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row1 in csv_reader:
+            if(line_count==0):
+                line_count+=1
+                continue
+            else:
+                print(f'\t{row1[2]},{row1[3]},{row1[4]},{row1[5]}')
+                cur13.execute(
+                "INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(row1[2]) + "\',\'" + str(
+                    row1[3]) + "\'," + str(row1[4]) + ",\'" + str(row1[5]) + "\')")
+                cnxn.commit()
+                line_count += 1
+
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
 
