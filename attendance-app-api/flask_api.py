@@ -1,8 +1,9 @@
 import datetime
-from flask import Flask, jsonify, make_response, request
-import pyodbc
 import json
 import pandas as pd
+import pyodbc
+from flask import Flask, jsonify, make_response, request
+
 pd.set_option('display.max_columns', 20)
 pd.set_option('display.width', 1000)
 # Some other example server values are
@@ -235,6 +236,13 @@ def export_students_list():
 def get_last_card_id():
     x = '123ABC'
     return jsonify(x), {"Content-Type": "application/json"}
+
+
+@app.route('/api/students/all', methods=['POST'])
+def read_from_file():
+    print(request.files.get('myFileName').filename)
+    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
+
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)
