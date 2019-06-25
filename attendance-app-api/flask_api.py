@@ -155,6 +155,10 @@ def add_new_student():
     cur6 = cnxn.cursor()
     cur6.execute("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
     cnxn.commit()
+    print("INSERT INTO Obecnosci([data],classID,[group],classStartDate, classEndDate, isPresent,id) values('2019-06-12',1,'TI-1', '15:10','16:40',0," + ",\'" + str(request_data['cardId']) + "\')")
+    cur9 = cnxn.cursor()
+    cur9.execute("INSERT INTO Obecnosci([data],classID,[group],classStartDate, classEndDate, isPresent,id) values('2019-06-12',1,'TI-1', '15:10','16:40',0," + "\'" + str(request_data['cardId']) + "\')")
+    cnxn.commit()
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
 
