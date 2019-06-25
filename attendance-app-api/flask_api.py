@@ -233,10 +233,14 @@ def get_last_card_id():
 @app.route('/api/students/file', methods=['POST'])
 def read_from_file():
     print(request.files.get('myFileName').filename)
+    file = request.files['myFileName']
+    if file:
+        filename = file.filename
+        file.save(filename)
     cur13 = cnxn.cursor()
     cur13.execute("TRUNCATE TABLE Studenci")
     cnxn.commit()
-    with open('Students_List.csv') as csv_file:
+    with open(filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row1 in csv_reader:
