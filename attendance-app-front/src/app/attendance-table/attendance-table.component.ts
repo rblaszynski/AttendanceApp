@@ -11,6 +11,7 @@ export interface PeriodicElement {
   lastName: string;
   group: string;
   isPresent: boolean;
+  nr_indeksu: number;
 }
 
 @Component({
@@ -19,7 +20,7 @@ export interface PeriodicElement {
   styleUrls: ['./attendance-table.component.less']
 })
 export class AttendanceTableComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'id', 'firstName', 'lastName', 'group', 'isPresent'];
+  displayedColumns: string[] = ['select', 'nr_indeksu', 'firstName', 'lastName', 'group', 'isPresent'];
   dataSource: MatTableDataSource<PeriodicElement>;
   selection = new SelectionModel<PeriodicElement>(true, []);
   darkModeActive: boolean;
