@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {saveAs} from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ export class ReportsService {
 
   generateReport(data): void {
     this.http.post(this.reportUrl, data)
-      .subscribe((res) => console.log(res));
+      .subscribe(res => {
+        let blob = new Blob([res], {type: 'text'});
+        let fileName = data.type + '_report.txt';
+        saveAs(blob, fileName);
+      });
   }
 
 }

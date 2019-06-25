@@ -10,7 +10,7 @@
     <mat-label>Student </mat-label>
     <mat-form-field>
       <mat-select [(ngModel)]="reportId">
-        <mat-option *ngFor="let student of students" [value]="student.id">
+        <mat-option *ngFor="let student of students" [value]="student.nr_indeksu">
           {{student.firstName}} {{student.lastName}}
         </mat-option>
       </mat-select>
