@@ -11,6 +11,7 @@ export class StudentsService {
   private studentsUrl = 'http://localhost:5000/api/students/all';
   private filesUrl = 'http://localhost:5000/api/students/file';
   private studentUrl = 'http://localhost:5000/api/student';
+  private getRecentCardUrl = 'http://localhost:5000/api/card/recent';
 
   constructor(private http: HttpClient) {
   }
@@ -31,6 +32,10 @@ export class StudentsService {
 
   exportStudents(): void {
     this.http.get(this.filesUrl).subscribe();
+  }
+
+  getLastCardID(): Observable<string> {
+    return this.http.get<string>(this.getRecentCardUrl);
   }
 
 }

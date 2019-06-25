@@ -96,6 +96,12 @@ export class StudentsListComponent implements OnInit {
     this.studentsService.exportStudents();
   }
 
+  getRecentCardId() {
+    this.studentsService.getLastCardID().subscribe((res: string) => {
+      this.student.cardId = res;
+    });
+  }
+
 }
 
 export interface Element {

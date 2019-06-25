@@ -1,5 +1,5 @@
 # AttendanceApp
-
+[Link do pełnej dokumentacji](https://drive.google.com/file/d/16B0LYUl-gTOtV7ZgwHuTNtm46wqHhNsa/view?usp=sharing)
 ## Overview
 Sprawdzanie obecności w laboratorium z wykorzystaniem legitymacji studenckiej
 
@@ -7,12 +7,19 @@ Sprawdzanie obecności w laboratorium z wykorzystaniem legitymacji studenckiej
 Aplikacja do zarządzania obecnościami studentów na zajęciach.
 
 ## Deployment
+build your database using ```Final.sql``` (tested with Microsoft SQL Server 2017)
 
-run ```flask_api.py```
+plug rfid reader to your computer (tested with MANHATTAN 102049)
+
+run ```Main.java``` (remember to set database connection options)
+
+run ```flask_api.py``` (remember to set database connection options)
 
 ng serve ```attendance-app-front```
 
+go to ```localhost:4200``` in your browser
 
+All files like reports will be generated in folder ```attendance-app-api```
 ## Built With
 
 * [Angular](https://angular.io/) - Web framework
