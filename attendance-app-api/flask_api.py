@@ -93,11 +93,14 @@ def get_list_of_students():
 def get_latest_lecture():
     cur2 = cnxn.cursor()
     cur3 = cnxn.cursor()
-
     cur2.execute("select className from Przedmioty where classID = 1")
-    data_class = str(cur2.fetchone())
+    a1 = str(cur2.fetchone())
+    b1 = a1.rstrip("\'), ")
+    data_class = b1.lstrip("(\'")
     cur3.execute("select [group] from Obecnosci where nr = 1")
-    data_group = str(cur3.fetchone())
+    a2 = str(cur3.fetchone())
+    b2 = a2.rstrip("\'), ")
+    data_group = b2.lstrip("(\'")
     my_query3 = query_db("select Studenci.id, Studenci.firstName, Studenci.lastName, Obecnosci.[group], Obecnosci.isPresent from Studenci, Obecnosci WHERE Studenci.id = Obecnosci.id;", )
     return jsonify(className=data_class,
                    classGroupName=data_group,
@@ -136,11 +139,6 @@ def get_from_calendar():
     return jsonify(calendar_data), {"Content-Type": "application/json"}
 
 
-@app.route('/api/students/all', methods=['POST'])
-def read_from_file():
-    print(request.files.get('myFileName').filename)
-    return jsonify('OK'), {"Content-Type": "application/octet-stream"}
-
 
 def bool_to_bit(x):
     if x == True:
@@ -157,6 +155,10 @@ def add_new_student():
     print("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
     cur6 = cnxn.cursor()
     cur6.execute("INSERT INTO Studenci(firstName,lastName,nr_indeksu,id) VALUES(\'" + str(request_data['firstName']) + "\',\'" + str(request_data['lastName']) + "\'," + str(request_data['id']) + ",\'" + str(request_data['cardId']) + "\')")
+    cnxn.commit()
+    print("INSERT INTO Obecnosci([data],classID,[group],classStartDate, classEndDate, isPresent,id) values('2019-06-12',1,'TI-1', '15:10','16:40',0," + ",\'" + str(request_data['cardId']) + "\')")
+    cur9 = cnxn.cursor()
+    cur9.execute("INSERT INTO Obecnosci([data],classID,[group],classStartDate, classEndDate, isPresent,id) values('2019-06-12',1,'TI-1', '15:10','16:40',0," + "\'" + str(request_data['cardId']) + "\')")
     cnxn.commit()
     return jsonify('OK'), {"Content-Type": "application/octet-stream"}
 
@@ -203,7 +205,13 @@ def export_students_list():
 
 @app.route('/api/card/recent', methods=['GET'])
 def get_last_card_id():
-    x = '123ABC'
+    cur8 = cnxn.cursor()
+
+    cur8.execute("select lastCardID from cardID where id = 1")
+    a = str(cur8.fetchone())
+    b = a.rstrip("\'), ")
+    x = b.lstrip("(\'")
+    print(x)
     return jsonify(x), {"Content-Type": "application/json"}
 
 
